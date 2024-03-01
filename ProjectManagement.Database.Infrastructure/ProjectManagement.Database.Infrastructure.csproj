@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectManagement.Database.Data\ProjectManagement.Database.Data.csproj" />
+    <ProjectReference Include="..\ProjectManagement.Database.Shared.Kernel\ProjectManagement.Database.Shared.Kernel.csproj" />
+  </ItemGroup>
+
+</Project>
