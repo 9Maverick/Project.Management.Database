@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjectManagement.Database.API.Data.DTO;
 using ProjectManagement.Database.Data;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 
 namespace ProjectManagement.Database.API.Controllers;
 

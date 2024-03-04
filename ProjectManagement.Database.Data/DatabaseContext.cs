@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Shared.Kernel.Configuration;
 
 namespace ProjectManagement.Database.Data;

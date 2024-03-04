@@ -1,4 +1,4 @@
-﻿namespace ProjectManagement.Database.Domain;
+﻿namespace ProjectManagement.Database.Domain.Entities;
 
 public class Comment
 {

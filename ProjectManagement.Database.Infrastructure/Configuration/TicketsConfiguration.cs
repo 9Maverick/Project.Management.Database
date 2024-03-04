@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Enums;
 
 namespace ProjectManagement.Database.Data.Configuration;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProjectManagement.Database.API.Data.DTO;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Enums;
 
 namespace ProjectManagement.Database.API.Data.Helpers;

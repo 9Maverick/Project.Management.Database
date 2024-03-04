@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 
 namespace ProjectManagement.Database.Data.Generators;
 

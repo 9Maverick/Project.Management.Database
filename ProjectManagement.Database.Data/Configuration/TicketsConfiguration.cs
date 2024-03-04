@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProjectManagement.Database.Data.Generators;
-using ProjectManagement.Database.Domain;
+using ProjectManagement.Database.Domain.Entities;
 
 namespace ProjectManagement.Database.Data.Configuration;
 
