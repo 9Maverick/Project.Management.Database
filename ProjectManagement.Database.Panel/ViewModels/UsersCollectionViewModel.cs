@@ -24,8 +24,7 @@ public class UsersCollectionViewModel : IUsersCollectionViewModel
 
     public void AddUser()
     {
-        if (string.IsNullOrWhiteSpace(UserToAdd.Name))
-            return;
+        if (!IsUserValid(UserToAdd)) return;
 
         var user = new User(UserToAdd);
 
@@ -52,5 +51,10 @@ public class UsersCollectionViewModel : IUsersCollectionViewModel
         {
             Users.Add(new UserViewModel(project, _context, OnUserDeleted));
         }
+    }
+
+    private bool IsUserValid(IUser user)
+    {
+        return !string.IsNullOrWhiteSpace(user.Name);
     }
 }

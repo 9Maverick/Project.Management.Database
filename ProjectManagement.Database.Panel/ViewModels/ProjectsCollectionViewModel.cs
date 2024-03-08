@@ -8,49 +8,55 @@ namespace ProjectManagement.Database.Panel.ViewModels;
 
 public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
 {
-	private DatabaseContext _context;
+    private DatabaseContext _context;
 
-	public List<IProjectViewModel> Projects { get; set; }
-	public IProject ProjectToAdd { get; set; }
+    public List<IProjectViewModel> Projects { get; set; }
+    public IProject ProjectToAdd { get; set; }
 
-	public ProjectsCollectionViewModel(DatabaseContext context)
-	{
-		_context = context;
+    public ProjectsCollectionViewModel(DatabaseContext context)
+    {
+        _context = context;
 
-		ProjectToAdd = new ProjectModel();
+        ProjectToAdd = new ProjectModel();
 
-		LoadProjects();
-	}
+        LoadProjects();
+    }
 
-	public void AddProject()
-	{
-		if (string.IsNullOrWhiteSpace(ProjectToAdd.Name) || string.IsNullOrWhiteSpace(ProjectToAdd.Abbreviation))
-			return;
+    public void AddProject()
+    {
+        if (!IsProjectValid(ProjectToAdd))
+            return;
 
-		var project = new Project(ProjectToAdd);
+        var project = new Project(ProjectToAdd);
 
-		_context.Projects.Add(project);
-		_context.SaveChanges();
+        _context.Projects.Add(project);
+        _context.SaveChanges();
 
-		Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+        Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
 
-		ProjectToAdd = new ProjectModel();
-	}
+        ProjectToAdd = new ProjectModel();
+    }
 
-	public void OnProjectDeleted(IProjectViewModel project)
-	{
-		Projects.Remove(project);
-	}
+    public void OnProjectDeleted(IProjectViewModel project)
+    {
+        Projects.Remove(project);
+    }
 
-	private void LoadProjects()
-	{
-		Projects = new List<IProjectViewModel>();
+    private void LoadProjects()
+    {
+        Projects = new List<IProjectViewModel>();
 
-		var projectsList = _context.Projects.ToList();
+        var projectsList = _context.Projects.ToList();
 
-		foreach (var project in projectsList)
-		{
-			Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
-		}
-	}
+        foreach (var project in projectsList)
+        {
+            Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+        }
+    }
+
+    private bool IsProjectValid(IProject project)
+    {
+        return !string.IsNullOrWhiteSpace(project.Name)
+            && !string.IsNullOrWhiteSpace(project.Abbreviation);
+    }
 }
