@@ -1,6 +1,8 @@
-﻿namespace ProjectManagement.Database.Domain.Entities;
+﻿using ProjectManagement.Database.Domain.Interfaces;
 
-public class Team
+namespace ProjectManagement.Database.Domain.Entities;
+
+public class Team : ITeam
 {
     public uint Id { get; set; }
     public string Name { get; set; }
@@ -9,4 +11,19 @@ public class Team
     public List<Team> Children { get; set; }
     public List<User> Users { get; set; }
 
+    public Team()
+    {
+        Children = new List<Team>();
+    }
+
+    public Team(ITeam team) : this()
+    {
+        SetTeam(team);
+    }
+
+    public void SetTeam(ITeam team)
+    {
+        Name = team.Name;
+        ParentId = team.ParentId;
+    }
 }
