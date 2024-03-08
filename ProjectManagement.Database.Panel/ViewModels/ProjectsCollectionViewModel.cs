@@ -8,46 +8,49 @@ namespace ProjectManagement.Database.Panel.ViewModels;
 
 public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
 {
-    private DatabaseContext _context;
+	private DatabaseContext _context;
 
-    public List<IProjectViewModel> Projects { get; set; }
-    public IProject ProjectToAdd { get; set; }
+	public List<IProjectViewModel> Projects { get; set; }
+	public IProject ProjectToAdd { get; set; }
 
-    public ProjectsCollectionViewModel(DatabaseContext context)
-    {
-        _context = context;
+	public ProjectsCollectionViewModel(DatabaseContext context)
+	{
+		_context = context;
 
-        ProjectToAdd = new ProjectModel();
+		ProjectToAdd = new ProjectModel();
 
-        LoadProjects();
-    }
+		LoadProjects();
+	}
 
-    public void AddProject()
-    {
-        var project = new Project(ProjectToAdd);
+	public void AddProject()
+	{
+		if (string.IsNullOrWhiteSpace(ProjectToAdd.Name) || string.IsNullOrWhiteSpace(ProjectToAdd.Abbreviation))
+			return;
 
-        _context.Projects.Add(project);
-        _context.SaveChanges();
+		var project = new Project(ProjectToAdd);
 
-        Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+		_context.Projects.Add(project);
+		_context.SaveChanges();
 
-        ProjectToAdd = new ProjectModel();
-    }
+		Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
 
-    public void OnProjectDeleted(IProjectViewModel project)
-    {
-        Projects.Remove(project);
-    }
+		ProjectToAdd = new ProjectModel();
+	}
 
-    private void LoadProjects()
-    {
-        Projects = new List<IProjectViewModel>();
+	public void OnProjectDeleted(IProjectViewModel project)
+	{
+		Projects.Remove(project);
+	}
 
-        var projectsList = _context.Projects.ToList();
+	private void LoadProjects()
+	{
+		Projects = new List<IProjectViewModel>();
 
-        foreach (var project in projectsList)
-        {
-            Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
-        }
-    }
+		var projectsList = _context.Projects.ToList();
+
+		foreach (var project in projectsList)
+		{
+			Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+		}
+	}
 }
