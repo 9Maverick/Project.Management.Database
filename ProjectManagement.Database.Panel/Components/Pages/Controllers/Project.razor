@@ -1,0 +1,28 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public IProjectViewModel viewModel { get; set; } = null!;
+}
+
+@if(!viewModel.IsDeleted)
+{
+    <tr>
+        <td>
+            @viewModel.Project.Name
+        </td>
+        <td>
+            @viewModel.Project.Abbreviation
+        </td>
+        <td>
+            @if (!viewModel.IsEditing)
+            {
+                <button>Edit</button>
+                <button @onclick="viewModel.Delete">Delete</button>
+            }
+            else
+            {
+                <button>Save</button>
+                <button>Cancel</button>
+            }
+        </td>
+    </tr>
+}

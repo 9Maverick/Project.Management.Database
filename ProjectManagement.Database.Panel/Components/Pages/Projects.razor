@@ -1,0 +1,39 @@
+﻿@page "/projects"
+@attribute [StreamRendering]
+
+@using ProjectManagement.Database.Panel.Components.Pages.Controllers
+
+@inject IProjectsCollectionViewModel viewModel
+
+<PageTitle>Projects</PageTitle>
+
+<h1>Projects</h1>
+
+<p>This component demonstrates showing data.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Abbreviation</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <input @bind="viewModel.ProjectToAdd.Name" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <input @bind="viewModel.ProjectToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
+            </td>
+            <td>
+                <button @onclick="viewModel.AddProject">Add</button>
+            </td>
+        </tr>
+        @foreach (var project in viewModel.Projects)
+        {
+            <Project viewModel="project"/>
+        }
+    </tbody>
+</table>
