@@ -1,0 +1,33 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public IUserViewModel viewModel { get; set; } = null!;
+}
+
+@if(!viewModel.IsDeleted)
+{
+    @if (!viewModel.IsEditing)
+    {
+
+        <tr>
+            <td>
+                @viewModel.User.Name
+            </td>
+            <td>
+                <button @onclick="viewModel.Edit">  Edit  </button>
+                <button @onclick="viewModel.Delete">Delete</button>
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                <input @bind="viewModel.User.Name" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <button @onclick="viewModel.Save">Save</button>
+                <button @onclick="viewModel.Cancel">Cancel</button>
+            </td>
+        </tr>
+    }
+}

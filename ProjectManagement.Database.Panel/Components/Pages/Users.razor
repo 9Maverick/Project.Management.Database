@@ -1,0 +1,35 @@
+﻿@page "/users"
+@attribute [StreamRendering]
+
+@using ProjectManagement.Database.Panel.Components.Pages.Controllers
+
+@inject IUsersCollectionViewModel viewModel
+
+<PageTitle>Projects</PageTitle>
+
+<h1>Projects</h1>
+
+<p>This component demonstrates showing data.</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <input @bind="viewModel.UserToAdd.Name" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <button @onclick="viewModel.AddUser">Add</button>
+            </td>
+        </tr>
+        @foreach (var user in viewModel.Users)
+        {
+            <User viewModel="user"/>
+        }
+    </tbody>
+</table>
