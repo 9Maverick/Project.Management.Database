@@ -1,0 +1,37 @@
+﻿@page "/teams"
+@attribute [StreamRendering]
+
+@using ProjectManagement.Database.Panel.Components.Pages.Controllers
+
+@inject ITeamsCollectionViewModel viewModel
+
+<PageTitle>Teams</PageTitle>
+
+<h1>Teams</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Parent</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <input @bind="viewModel.TeamToAdd.Name" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <input @bind="viewModel.TeamToAdd.ParentId" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <button @onclick="viewModel.AddTeam">Add</button>
+            </td>
+        </tr>
+        @foreach (var team in viewModel.Teams)
+        {
+            <Team viewModel="team"/>
+        }
+    </tbody>
+</table>

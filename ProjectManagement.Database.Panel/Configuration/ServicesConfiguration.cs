@@ -8,5 +8,6 @@ public static class ServicesConfiguration
     {
         services.AddScoped<IProjectsCollectionViewModel, ProjectsCollectionViewModel>();
         services.AddScoped<IUsersCollectionViewModel, UsersCollectionViewModel>();
+        services.AddScoped<ITeamsCollectionViewModel, TeamsCollectionViewModel>();
     }
 }
