@@ -2,9 +2,11 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
-using ProjectManagement.Database.Panel.ViewModels.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels;
+namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
 public class TeamsCollectionViewModel : ITeamsCollectionViewModel
 {

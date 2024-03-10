@@ -2,9 +2,9 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
-using ProjectManagement.Database.Panel.ViewModels.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities;
 
 public class TeamViewModel : ITeamViewModel
 {

@@ -1,6 +1,6 @@
 ﻿using ProjectManagement.Database.Domain.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels.Interfaces;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 public interface ITeamViewModel
 {

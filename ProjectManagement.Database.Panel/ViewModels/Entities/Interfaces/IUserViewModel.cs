@@ -1,10 +1,10 @@
 ﻿using ProjectManagement.Database.Domain.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels.Interfaces;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-public interface IProjectViewModel
+public interface IUserViewModel
 {
-    public IProject Project { get; set; }
+    public IUser User { get; set; }
     public bool IsDeleted { get; set; }
     public bool IsEditing { get; set; }
     public void Edit();

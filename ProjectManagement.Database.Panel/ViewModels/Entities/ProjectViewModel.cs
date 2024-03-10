@@ -2,39 +2,39 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
-using ProjectManagement.Database.Panel.ViewModels.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities;
 
-public class UserViewModel : IUserViewModel
+public class ProjectViewModel : IProjectViewModel
 {
-    private Action<IUserViewModel> OnDeleted;
+    private Action<IProjectViewModel> OnDeleted;
 
     private DatabaseContext _context;
-    private User _user;
+    private Project _project;
 
-    public IUser User { get; set; }
+    public IProject Project { get; set; }
     public bool IsDeleted { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
-    public UserViewModel(User project, DatabaseContext context, Action<IUserViewModel> onDeleted)
+    public ProjectViewModel(Project project, DatabaseContext context, Action<IProjectViewModel> onDeleted)
     {
         _context = context;
-        _user = project;
+        _project = project;
 
-        User = project;
+        Project = project;
         OnDeleted = onDeleted;
     }
 
     public void Cancel()
     {
-        User = _user;
+        Project = _project;
         IsEditing = false;
     }
 
     public void Delete()
     {
-        _context.Users.Remove(_user);
+        _context.Projects.Remove(_project);
         _context.SaveChanges();
 
         IsDeleted = true;
@@ -44,16 +44,16 @@ public class UserViewModel : IUserViewModel
 
     public void Edit()
     {
-        User = new UserModel(_user);
+        Project = new ProjectModel(_project);
         IsEditing = true;
     }
 
     public void Save()
     {
-        _user.SetUser(User);
+        _project.SetProject(Project);
         _context.SaveChanges();
 
-        User = _user;
+        Project = _project;
         IsEditing = false;
     }
 }

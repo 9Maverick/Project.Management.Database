@@ -1,5 +1,5 @@
-﻿using ProjectManagement.Database.Panel.ViewModels;
-using ProjectManagement.Database.Panel.ViewModels.Interfaces;
+﻿using ProjectManagement.Database.Panel.ViewModels.Collections;
+using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 
 namespace ProjectManagement.Database.Panel.Configuration;
 public static class ServicesConfiguration
