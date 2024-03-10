@@ -14,4 +14,9 @@
     <ProjectReference Include="..\ProjectManagement.Database.Infrastructure\ProjectManagement.Database.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Controllers\Collections\" />
+    <Folder Include="Components\Pages\Entities\" />
+  </ItemGroup>
+
 </Project>
