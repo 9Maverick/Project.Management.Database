@@ -13,7 +13,7 @@ public class ProjectViewModel : IProjectViewModel
     private DatabaseContext _context;
     private Project _project;
 
-    public IProject Project { get; set; }
+    public IProject Entity { get; set; }
     public bool IsDeleted { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
@@ -22,13 +22,13 @@ public class ProjectViewModel : IProjectViewModel
         _context = context;
         _project = project;
 
-        Project = project;
+        Entity = project;
         OnDeleted = onDeleted;
     }
 
     public void Cancel()
     {
-        Project = _project;
+        Entity = _project;
         IsEditing = false;
     }
 
@@ -44,16 +44,16 @@ public class ProjectViewModel : IProjectViewModel
 
     public void Edit()
     {
-        Project = new ProjectModel(_project);
+        Entity = new ProjectModel(_project);
         IsEditing = true;
     }
 
     public void Save()
     {
-        _project.SetProject(Project);
+        _project.SetProject(Entity);
         _context.SaveChanges();
 
-        Project = _project;
+        Entity = _project;
         IsEditing = false;
     }
 }

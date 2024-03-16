@@ -10,10 +10,10 @@
 
         <tr>
             <td>
-                @viewModel.Project.Name
+                @viewModel.Entity.Name
             </td>
             <td>
-                @viewModel.Project.Abbreviation
+                @viewModel.Entity.Abbreviation
             </td>
             <td>
                 <button @onclick="viewModel.Edit">Edit</button>
@@ -25,10 +25,10 @@
     {
         <tr>
             <td>
-                <input @bind="viewModel.Project.Name" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
-                <input @bind="viewModel.Project.Abbreviation" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.Entity.Abbreviation" class="form-control" placeholder="Name" />
             </td>
             <td>
                 <button @onclick="viewModel.Save">Save</button>

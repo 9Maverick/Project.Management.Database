@@ -13,7 +13,7 @@ public class TeamViewModel : ITeamViewModel
     private DatabaseContext _context;
     private Team _team;
 
-    public ITeam Team { get; set; }
+    public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
     public bool IsDeleted { get; set; } = false;
     public bool IsEditing { get; set; } = false;
@@ -23,15 +23,14 @@ public class TeamViewModel : ITeamViewModel
         _context = context;
         _team = team;
 
-        Team = _team;
-        OnDeleted = onDeleted;
+        Entity = _team;
 
         LoadParent();
     }
 
     public void Cancel()
     {
-        Team = _team;
+        Entity = _team;
         IsEditing = false;
     }
 
@@ -47,16 +46,16 @@ public class TeamViewModel : ITeamViewModel
 
     public void Edit()
     {
-        Team = new TeamModel(_team);
+        Entity = new TeamModel(_team);
         IsEditing = true;
     }
 
     public void Save()
     {
-        _team.SetTeam(Team);
+        _team.SetTeam(Entity);
         _context.SaveChanges();
 
-        Team = _team;
+        Entity = _team;
         IsEditing = false;
 
 
@@ -64,7 +63,7 @@ public class TeamViewModel : ITeamViewModel
 
     private void LoadParent()
     {
-        var parentId = Team.ParentId;
+        var parentId = Entity.ParentId;
         if (parentId == null || parentId == 0) return;
 
         Parent = _context.Teams

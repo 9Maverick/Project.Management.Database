@@ -13,7 +13,7 @@ public class UserViewModel : IUserViewModel
     private DatabaseContext _context;
     private User _user;
 
-    public IUser User { get; set; }
+    public IUser Entity { get; set; }
     public bool IsDeleted { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
@@ -22,13 +22,13 @@ public class UserViewModel : IUserViewModel
         _context = context;
         _user = project;
 
-        User = project;
+        Entity = project;
         OnDeleted = onDeleted;
     }
 
     public void Cancel()
     {
-        User = _user;
+        Entity = _user;
         IsEditing = false;
     }
 
@@ -44,16 +44,16 @@ public class UserViewModel : IUserViewModel
 
     public void Edit()
     {
-        User = new UserModel(_user);
+        Entity = new UserModel(_user);
         IsEditing = true;
     }
 
     public void Save()
     {
-        _user.SetUser(User);
+        _user.SetUser(Entity);
         _context.SaveChanges();
 
-        User = _user;
+        Entity = _user;
         IsEditing = false;
     }
 }

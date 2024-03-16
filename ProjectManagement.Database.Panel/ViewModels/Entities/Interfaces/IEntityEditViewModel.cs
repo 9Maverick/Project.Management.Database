@@ -2,9 +2,8 @@
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-public interface IUserViewModel
+public interface IEntityEditViewModel
 {
-    public IUser User { get; set; }
     public bool IsDeleted { get; set; }
     public bool IsEditing { get; set; }
     public void Edit();
@@ -12,3 +11,7 @@ public interface IUserViewModel
     public void Cancel();
     public void Delete();
 }
+
+public interface IProjectViewModel : IEntityViewModel<IProject>, IEntityEditViewModel;
+public interface IUserViewModel : IEntityViewModel<IUser>, IEntityEditViewModel;
+public interface ITeamViewModel : IChildEntityViewModel<ITeam>, IEntityEditViewModel;

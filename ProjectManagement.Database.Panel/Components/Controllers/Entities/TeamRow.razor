@@ -10,7 +10,7 @@
 
         <tr>
             <td>
-                @viewModel.Team.Name
+        @viewModel.Entity.Name
             </td>
             <td>
                 @viewModel.Parent?.Name
@@ -25,10 +25,10 @@
     {
         <tr>
             <td>
-                <input @bind="viewModel.Team.Name" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
-                <input @bind="viewModel.Team.ParentId" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.Entity.ParentId" class="form-control" placeholder="Name" />
             </td>
             <td>
                 <button @onclick="viewModel.Save">Save</button>

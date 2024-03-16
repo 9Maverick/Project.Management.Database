@@ -10,7 +10,7 @@
 
         <tr>
             <td>
-                @viewModel.User.Name
+                @viewModel.Entity.Name
             </td>
             <td>
                 <button @onclick="viewModel.Edit">Edit</button>
@@ -22,7 +22,7 @@
     {
         <tr>
             <td>
-                <input @bind="viewModel.User.Name" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
                 <button @onclick="viewModel.Save">Save</button>
