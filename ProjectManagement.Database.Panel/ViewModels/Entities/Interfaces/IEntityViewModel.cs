@@ -8,8 +8,8 @@ public interface IEntityViewModel<T>
     public T Entity { get; set; }
 }
 
-public interface IProjectViewModel : IEntityViewModel<IProject>, IEditableViewModel;
-public interface IUserViewModel : IEntityViewModel<IUser>, IEditableViewModel;
+public interface IProjectViewModel : IEditableEntityViewModel<IProject>;
+public interface IUserViewModel : IEditableEntityViewModel<IUser>;
 
 
 public interface IChildEntityViewModel<T> : IEntityViewModel<T>
