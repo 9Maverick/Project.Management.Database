@@ -8,11 +8,11 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class UsersCollectionViewModel : IUsersCollectionViewModel
+public class UsersCollectionViewModel : IEntityCollectionViewModel<IUser>
 {
     private DatabaseContext _context;
 
-    public List<IUserViewModel> Entities { get; set; }
+    public List<IEntityViewModel<IUser>> Entities { get; set; }
     public IUser EntityToAdd { get; set; }
 
     public UsersCollectionViewModel(DatabaseContext context)
@@ -45,7 +45,7 @@ public class UsersCollectionViewModel : IUsersCollectionViewModel
 
     private void LoadUsers()
     {
-        Entities = new List<IUserViewModel>();
+        Entities = new List<IEntityViewModel<IUser>>();
 
         var usersList = _context.Users.ToList();
 
