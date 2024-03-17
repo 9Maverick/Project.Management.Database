@@ -2,6 +2,7 @@ using Microsoft.IdentityModel.Logging;
 using ProjectManagement.Database.Infrastructure;
 using ProjectManagement.Database.Panel.Components;
 using ProjectManagement.Database.Panel.Configuration;
+using Syncfusion.Blazor;
 
 namespace ProjectManagement.Database.Panel;
 
@@ -24,6 +25,8 @@ public class Program
         builder.Services.AddInfrastructure(connectionString, builder.Environment.IsDevelopment());
 
         builder.Services.AddViewModels();
+
+        builder.Services.AddSyncfusionBlazor();
 
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
