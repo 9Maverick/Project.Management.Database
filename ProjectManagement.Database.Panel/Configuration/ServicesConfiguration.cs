@@ -1,4 +1,5 @@
-﻿using ProjectManagement.Database.Panel.ViewModels.Collections;
+﻿using ProjectManagement.Database.Domain.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Collections;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Page;
@@ -10,7 +11,7 @@ public static class ServicesConfiguration
     {
         services.AddTransient<IProjectsCollectionViewModel, ProjectsCollectionViewModel>();
         services.AddTransient<IUsersCollectionViewModel, UsersCollectionViewModel>();
-        services.AddTransient<ITeamsCollectionViewModel, TeamsCollectionViewModel>();
+        services.AddTransient<IChildEntityCollectionViewModel<ITeam>, TeamsCollectionViewModel>();
         services.AddTransient<IEditableTeamViewModel, TeamPageViewModel>();
     }
 }

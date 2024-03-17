@@ -8,7 +8,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class TeamsCollectionViewModel : ITeamsCollectionViewModel
+public class TeamsCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 {
     private DatabaseContext _context;
 
