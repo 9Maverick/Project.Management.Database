@@ -17,62 +17,65 @@
 
 <PageTitle>Team</PageTitle>
 
-<h1>@viewModel.Entity.Name</h1>
-
 @if(!viewModel.IsLoaded)
 {
     <p>Loading...</p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Parent</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (!viewModel.IsEditing)
+
+    <h1>@viewModel.Entity.Name</h1>
+
+    @if (!viewModel.IsEditing)
+    {
+        <p>
+            Name:
+            @viewModel.Entity.Name
+
+        </p>
+        <p>
+            Parent:
+            @if(viewModel.Parent == null)
             {
-                <tr>
-                    <td>
-                        @viewModel.Entity.Name
-                    </td>
-                    <td>
-                        @viewModel.Parent?.Name
-                    </td>
-                    <td>
-                        <button @onclick="viewModel.Edit">Edit</button>
-                        <button @onclick="viewModel.Delete">Delete</button>
-                    </td>
-                </tr>
+                <span>Empty</span>
             }
             else
             {
-                <tr>
-                    <td>
-                        <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
-                    </td>
-                    <td>
-                        <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
-                                        DataSource="viewModel.ParentIdNames"
-                                        @bind-Value="viewModel.Entity.ParentId"
-                                        Placeholder="Select Parent">
-
-                            <DropDownListFieldSettings Text="Value" Value="Key">
-                            </DropDownListFieldSettings>
-
-
-                        </SfDropDownList>
-                    </td>
-                    <td>
-                        <button @onclick="viewModel.Save">Save</button>
-                        <button @onclick="viewModel.Cancel">Cancel</button>
-                    </td>
-                </tr>
+                @viewModel.Parent?.Name
             }
-        </tbody>
-    </table>
+
+        </p>
+        <p>
+            <button @onclick="viewModel.Edit">Edit</button>
+        </p>
+    }
+    else
+    {
+        <p>
+            Name:
+            <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
+
+        </p>
+        <p>
+            Parent:
+            <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
+                            DataSource="viewModel.ParentIdNames"
+                            @bind-Value="viewModel.Entity.ParentId"
+                            Placeholder="Select Parent">
+
+                <DropDownListFieldSettings Text="Value" Value="Key">
+                </DropDownListFieldSettings>
+
+
+            </SfDropDownList>
+
+        </p>
+        <p>
+            <button @onclick="viewModel.Save">Save</button>
+            <button @onclick="viewModel.Cancel">Cancel</button>
+        </p>
+    }
+    <p>
+        <button @onclick="viewModel.Delete">Delete</button>
+    </p>
 }
