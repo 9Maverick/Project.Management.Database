@@ -1,39 +1,18 @@
 ﻿@code {
     [Parameter, EditorRequired]
-    public IProjectViewModel viewModel { get; set; } = null!;
+    public IEntityViewModel<IProject> viewModel { get; set; } = null!;
 }
 
-@if(!viewModel.IsLoaded)
-{
-    @if (!viewModel.IsEditing)
-    {
-
-        <tr>
-            <td>
-                @viewModel.Entity.Name
-            </td>
-            <td>
-                @viewModel.Entity.Abbreviation
-            </td>
-            <td>
-                <button @onclick="viewModel.Edit">Edit</button>
-                <button @onclick="viewModel.Delete">Delete</button>
-            </td>
-        </tr>
-    }
-    else
-    {
-        <tr>
-            <td>
-                <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
-            </td>
-            <td>
-                <input @bind="viewModel.Entity.Abbreviation" class="form-control" placeholder="Name" />
-            </td>
-            <td>
-                <button @onclick="viewModel.Save">Save</button>
-                <button @onclick="viewModel.Cancel">Cancel</button>
-            </td>
-        </tr>
-    }
-}
+<tr>
+    <td>
+        @viewModel.Entity.Name
+    </td>
+    <td>
+        @viewModel.Entity.Abbreviation
+    </td>
+    <td>
+        <NavLink href=@($"projects/{viewModel.Id}")>
+            <button>Open</button>
+        </NavLink>
+    </td>
+</tr>

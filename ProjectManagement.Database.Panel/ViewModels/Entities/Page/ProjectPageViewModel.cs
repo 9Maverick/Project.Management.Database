@@ -4,27 +4,34 @@ using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels.Entities;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class ProjectViewModel : IProjectViewModel
+public class ProjectPageViewModel : IProjectViewModel
 {
-    private Action<IProjectViewModel> OnDeleted;
 
     private DatabaseContext _context;
     private Project _project;
 
-    public uint Id { get; set; }
+    private uint _id;
+
+    public uint Id
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            LoadProject();
+        }
+    }
     public IProject Entity { get; set; }
+    public IProject? Parent { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; set; }
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
-    public ProjectViewModel(Project project, DatabaseContext context, Action<IProjectViewModel> onDeleted)
+    public ProjectPageViewModel(DatabaseContext context)
     {
         _context = context;
-        _project = project;
-
-        Entity = project;
-        OnDeleted = onDeleted;
     }
 
     public void Cancel()
@@ -38,9 +45,7 @@ public class ProjectViewModel : IProjectViewModel
         _context.Projects.Remove(_project);
         _context.SaveChanges();
 
-        IsLoaded = true;
-
-        OnDeleted(this);
+        IsLoaded = false;
     }
 
     public void Edit()
@@ -54,7 +59,22 @@ public class ProjectViewModel : IProjectViewModel
         _project.SetProject(Entity);
         _context.SaveChanges();
 
-        Entity = _project;
         IsEditing = false;
+
+        LoadProject();
+    }
+
+    private void LoadProject()
+    {
+        if (Id == 0) return;
+
+        var project = _context.Projects.Find(Id);
+
+        if (project == null) return;
+
+        _project = project;
+        Entity = _project;
+
+        IsLoaded = true;
     }
 }

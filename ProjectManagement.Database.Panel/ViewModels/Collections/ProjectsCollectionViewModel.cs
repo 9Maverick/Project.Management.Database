@@ -3,8 +3,8 @@ using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
-using ProjectManagement.Database.Panel.ViewModels.Entities;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
@@ -34,15 +34,11 @@ public class ProjectsCollectionViewModel : IEntityCollectionViewModel<IProject>
         _context.Projects.Add(project);
         _context.SaveChanges();
 
-        Entities.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+        Entities.Add(new ProjectRowViewModel(project));
 
         EntityToAdd = new ProjectModel();
     }
 
-    public void OnProjectDeleted(IProjectViewModel project)
-    {
-        Entities.Remove(project);
-    }
 
     private void LoadProjects()
     {
@@ -52,7 +48,7 @@ public class ProjectsCollectionViewModel : IEntityCollectionViewModel<IProject>
 
         foreach (var project in projectsList)
         {
-            Entities.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+            Entities.Add(new ProjectRowViewModel(project));
         }
     }
 

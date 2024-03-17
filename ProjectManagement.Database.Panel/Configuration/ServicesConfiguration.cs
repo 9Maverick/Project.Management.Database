@@ -9,9 +9,21 @@ public static class ServicesConfiguration
 {
     public static void AddViewModels(this IServiceCollection services)
     {
+        AddCollectionsViewModels(services);
+
+        AddPagesViewModels(services);
+    }
+
+    public static void AddCollectionsViewModels(this IServiceCollection services)
+    {
         services.AddTransient<IEntityCollectionViewModel<IProject>, ProjectsCollectionViewModel>();
         services.AddTransient<IEntityCollectionViewModel<IUser>, UsersCollectionViewModel>();
         services.AddTransient<IChildEntityCollectionViewModel<ITeam>, TeamsCollectionViewModel>();
+    }
+
+    public static void AddPagesViewModels(this IServiceCollection services)
+    {
         services.AddTransient<IEditableTeamViewModel, TeamPageViewModel>();
+        services.AddTransient<IProjectViewModel, ProjectPageViewModel>();
     }
 }
