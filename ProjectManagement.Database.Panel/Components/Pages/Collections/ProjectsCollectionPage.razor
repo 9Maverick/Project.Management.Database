@@ -1,7 +1,7 @@
 ﻿@page "/projects"
 @attribute [StreamRendering]
 
-@inject IProjectsCollectionViewModel viewModel
+@inject IEntityCollectionViewModel<IProject> viewModel
 
 <PageTitle>Projects</PageTitle>
 
@@ -24,7 +24,7 @@
                 <input @bind="viewModel.EntityToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
             </td>
             <td>
-                <button @onclick="viewModel.Add">Add</button>
+                <button @onclick="viewModel.AddEntity">Add</button>
             </td>
         </tr>
         @foreach (var project in viewModel.Entities)

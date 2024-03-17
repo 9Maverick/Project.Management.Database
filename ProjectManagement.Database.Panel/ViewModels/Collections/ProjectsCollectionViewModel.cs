@@ -8,11 +8,11 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
+public class ProjectsCollectionViewModel : IEntityCollectionViewModel<IProject>
 {
     private DatabaseContext _context;
 
-    public List<IProjectViewModel> Entities { get; set; }
+    public List<IEntityViewModel<IProject>> Entities { get; set; }
     public IProject EntityToAdd { get; set; }
 
     public ProjectsCollectionViewModel(DatabaseContext context)
@@ -24,7 +24,7 @@ public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
         LoadProjects();
     }
 
-    public void Add()
+    public void AddEntity()
     {
         if (!IsProjectValid(EntityToAdd))
             return;
@@ -46,7 +46,7 @@ public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
 
     private void LoadProjects()
     {
-        Entities = new List<IProjectViewModel>();
+        Entities = new List<IEntityViewModel<IProject>>();
 
         var projectsList = _context.Projects.ToList();
 
