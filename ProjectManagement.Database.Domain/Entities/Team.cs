@@ -8,7 +8,6 @@ public class Team : ITeam
     public string Name { get; set; }
     public uint? ParentId { get; set; }
     public Team? Parent { get; set; }
-    //TODO: Pass users to parent teams
     public List<Team> Children { get; set; }
     public List<User> Users { get; set; }
 
