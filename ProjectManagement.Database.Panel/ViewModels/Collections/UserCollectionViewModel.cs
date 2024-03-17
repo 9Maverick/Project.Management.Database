@@ -2,6 +2,7 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
+using ProjectManagement.Database.Panel.Models;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
@@ -12,6 +13,7 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
 {
     private DatabaseContext _context;
 
+    public CollectionSettingsModel<IUser> Settings { get; set; }
     public List<IEntityViewModel<IUser>> Entities { get; set; }
     public IUser EntityToAdd { get; set; }
 

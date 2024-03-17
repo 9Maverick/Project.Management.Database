@@ -2,6 +2,7 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
+using ProjectManagement.Database.Panel.Models;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
@@ -12,6 +13,7 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 {
     private DatabaseContext _context;
 
+    public CollectionSettingsModel<ITeam> Settings { get; set; }
     public List<IChildEntityViewModel<ITeam>> Entities { get; set; }
     public Dictionary<uint?, string> ParentIdNames { get; set; }
     public ITeam EntityToAdd { get; set; }
