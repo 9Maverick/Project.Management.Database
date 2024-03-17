@@ -13,9 +13,10 @@ public class TeamViewModel : ITeamViewModel
     private DatabaseContext _context;
     private Team _team;
 
+    public uint Id { get; set; }
     public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
     public TeamViewModel(Team team, DatabaseContext context, Action<ITeamViewModel> onDeleted)
@@ -39,7 +40,7 @@ public class TeamViewModel : ITeamViewModel
         _context.Teams.Remove(_team);
         _context.SaveChanges();
 
-        IsDeleted = true;
+        IsLoaded = true;
 
         OnDeleted(this);
     }

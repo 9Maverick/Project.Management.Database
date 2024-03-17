@@ -13,8 +13,9 @@ public class UserViewModel : IUserViewModel
     private DatabaseContext _context;
     private User _user;
 
+    public uint Id { get; set; }
     public IUser Entity { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
     public UserViewModel(User project, DatabaseContext context, Action<IUserViewModel> onDeleted)
@@ -37,7 +38,7 @@ public class UserViewModel : IUserViewModel
         _context.Users.Remove(_user);
         _context.SaveChanges();
 
-        IsDeleted = true;
+        IsLoaded = true;
 
         OnDeleted(this);
     }

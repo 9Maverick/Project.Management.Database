@@ -3,7 +3,7 @@
     public IProjectViewModel viewModel { get; set; } = null!;
 }
 
-@if(!viewModel.IsDeleted)
+@if(!viewModel.IsLoaded)
 {
     @if (!viewModel.IsEditing)
     {

@@ -13,8 +13,9 @@ public class ProjectViewModel : IProjectViewModel
     private DatabaseContext _context;
     private Project _project;
 
+    public uint Id { get; set; }
     public IProject Entity { get; set; }
-    public bool IsDeleted { get; set; } = false;
+    public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
     public ProjectViewModel(Project project, DatabaseContext context, Action<IProjectViewModel> onDeleted)
@@ -37,7 +38,7 @@ public class ProjectViewModel : IProjectViewModel
         _context.Projects.Remove(_project);
         _context.SaveChanges();
 
-        IsDeleted = true;
+        IsLoaded = true;
 
         OnDeleted(this);
     }
