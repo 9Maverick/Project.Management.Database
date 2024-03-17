@@ -5,8 +5,8 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 
 public interface IProjectsCollectionViewModel
 {
-    public List<IProjectViewModel> Projects { get; set; }
-    public IProject ProjectToAdd { get; set; }
+    public List<IProjectViewModel> Entities { get; set; }
+    public IProject EntityToAdd { get; set; }
 
-    public void AddProject();
+    public void Add();
 }

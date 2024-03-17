@@ -18,16 +18,16 @@
     <tbody>
         <tr>
             <td>
-                <input @bind="viewModel.TeamToAdd.Name" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
                 <input @bind="viewModel.TeamToAdd.ParentId" class="form-control" placeholder="Name" />
             </td>
             <td>
-                <button @onclick="viewModel.AddTeam">Add</button>
+                <button @onclick="viewModel.AddEntity">Add</button>
             </td>
         </tr>
-        @foreach (var team in viewModel.Teams)
+        @foreach (var team in viewModel.Entities)
         {
             <TeamRow viewModel="team"/>
         }

@@ -18,16 +18,16 @@
     <tbody>
         <tr>
             <td>
-                <input @bind="viewModel.ProjectToAdd.Name" class="form-control" placeholder="Name" />
+                <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
-                <input @bind="viewModel.ProjectToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
+                <input @bind="viewModel.EntityToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
             </td>
             <td>
-                <button @onclick="viewModel.AddProject">Add</button>
+                <button @onclick="viewModel.Add">Add</button>
             </td>
         </tr>
-        @foreach (var project in viewModel.Projects)
+        @foreach (var project in viewModel.Entities)
         {
             <ProjectRow viewModel="project"/>
         }

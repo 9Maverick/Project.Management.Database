@@ -5,8 +5,8 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 
 public interface IUsersCollectionViewModel
 {
-    public List<IUserViewModel> Users { get; set; }
-    public IUser UserToAdd { get; set; }
+    public List<IUserViewModel> Entities { get; set; }
+    public IUser EntityToAdd { get; set; }
 
-    public void AddUser();
+    public void AddEntity();
 }

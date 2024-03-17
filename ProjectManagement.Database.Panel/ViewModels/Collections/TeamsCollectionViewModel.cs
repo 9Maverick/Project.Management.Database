@@ -3,8 +3,8 @@ using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
-using ProjectManagement.Database.Panel.ViewModels.Entities;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
@@ -12,47 +12,51 @@ public class TeamsCollectionViewModel : ITeamsCollectionViewModel
 {
     private DatabaseContext _context;
 
-    public List<ITeamViewModel> Teams { get; set; }
-    public ITeam TeamToAdd { get; set; }
+    public List<IChildEntityViewModel<ITeam>> Entities { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; set; }
+    public ITeam EntityToAdd { get; set; }
 
     public TeamsCollectionViewModel(DatabaseContext context)
     {
         _context = context;
 
-        TeamToAdd = new TeamModel();
+        EntityToAdd = new TeamModel();
 
-        LoadTeams();
+        Load();
     }
 
-    public void AddTeam()
+    public void AddEntity()
     {
-        if (!IsTeamValid(TeamToAdd))
+        if (!IsTeamValid(EntityToAdd))
             return;
 
-        var team = new Team(TeamToAdd);
+        var team = new Team(EntityToAdd);
 
         _context.Teams.Add(team);
         _context.SaveChanges();
 
-        Teams.Add(new TeamViewModel(team, _context, OnTeamDeleted));
+        OnTeamAdded(team);
 
-        TeamToAdd = new TeamModel();
+        EntityToAdd = new TeamModel();
     }
 
-    public void OnTeamDeleted(ITeamViewModel team)
+    public void OnTeamAdded(Team team)
     {
-        Teams.Remove(team);
+        Entities.Add(new TeamRowViewModel(team, _context));
+
+        ParentIdNames.Add(team.Id, team.Name);
     }
 
-    private void LoadTeams()
+    public void Load()
     {
-        Teams = new List<ITeamViewModel>();
+        Entities = new List<IChildEntityViewModel<ITeam>>();
+        ParentIdNames = new Dictionary<uint?, string>();
 
         var teamsList = _context.Teams.ToList();
 
         foreach (var team in teamsList)
         {
-            Teams.Add(new TeamViewModel(team, _context, OnTeamDeleted));
+            OnTeamAdded(team);
         }
     }
 

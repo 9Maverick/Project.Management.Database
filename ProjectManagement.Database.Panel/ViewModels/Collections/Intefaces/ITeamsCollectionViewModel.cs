@@ -5,8 +5,9 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 
 public interface ITeamsCollectionViewModel
 {
-    public List<ITeamViewModel> Teams { get; set; }
-    public ITeam TeamToAdd { get; set; }
+    public List<IChildEntityViewModel<ITeam>> Entities { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; set; }
+    public ITeam EntityToAdd { get; set; }
 
-    public void AddTeam();
+    public void AddEntity();
 }

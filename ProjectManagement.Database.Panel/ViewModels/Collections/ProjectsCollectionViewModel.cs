@@ -12,47 +12,47 @@ public class ProjectsCollectionViewModel : IProjectsCollectionViewModel
 {
     private DatabaseContext _context;
 
-    public List<IProjectViewModel> Projects { get; set; }
-    public IProject ProjectToAdd { get; set; }
+    public List<IProjectViewModel> Entities { get; set; }
+    public IProject EntityToAdd { get; set; }
 
     public ProjectsCollectionViewModel(DatabaseContext context)
     {
         _context = context;
 
-        ProjectToAdd = new ProjectModel();
+        EntityToAdd = new ProjectModel();
 
         LoadProjects();
     }
 
-    public void AddProject()
+    public void Add()
     {
-        if (!IsProjectValid(ProjectToAdd))
+        if (!IsProjectValid(EntityToAdd))
             return;
 
-        var project = new Project(ProjectToAdd);
+        var project = new Project(EntityToAdd);
 
         _context.Projects.Add(project);
         _context.SaveChanges();
 
-        Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+        Entities.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
 
-        ProjectToAdd = new ProjectModel();
+        EntityToAdd = new ProjectModel();
     }
 
     public void OnProjectDeleted(IProjectViewModel project)
     {
-        Projects.Remove(project);
+        Entities.Remove(project);
     }
 
     private void LoadProjects()
     {
-        Projects = new List<IProjectViewModel>();
+        Entities = new List<IProjectViewModel>();
 
         var projectsList = _context.Projects.ToList();
 
         foreach (var project in projectsList)
         {
-            Projects.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
+            Entities.Add(new ProjectViewModel(project, _context, OnProjectDeleted));
         }
     }
 

@@ -12,46 +12,46 @@ public class UsersCollectionViewModel : IUsersCollectionViewModel
 {
     private DatabaseContext _context;
 
-    public List<IUserViewModel> Users { get; set; }
-    public IUser UserToAdd { get; set; }
+    public List<IUserViewModel> Entities { get; set; }
+    public IUser EntityToAdd { get; set; }
 
     public UsersCollectionViewModel(DatabaseContext context)
     {
         _context = context;
 
-        UserToAdd = new UserModel();
+        EntityToAdd = new UserModel();
 
         LoadUsers();
     }
 
-    public void AddUser()
+    public void AddEntity()
     {
-        if (!IsUserValid(UserToAdd)) return;
+        if (!IsUserValid(EntityToAdd)) return;
 
-        var user = new User(UserToAdd);
+        var user = new User(EntityToAdd);
 
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        Users.Add(new UserViewModel(user, _context, OnUserDeleted));
+        Entities.Add(new UserViewModel(user, _context, OnUserDeleted));
 
-        UserToAdd = new UserModel();
+        EntityToAdd = new UserModel();
     }
 
     public void OnUserDeleted(IUserViewModel user)
     {
-        Users.Remove(user);
+        Entities.Remove(user);
     }
 
     private void LoadUsers()
     {
-        Users = new List<IUserViewModel>();
+        Entities = new List<IUserViewModel>();
 
         var usersList = _context.Users.ToList();
 
         foreach (var project in usersList)
         {
-            Users.Add(new UserViewModel(project, _context, OnUserDeleted));
+            Entities.Add(new UserViewModel(project, _context, OnUserDeleted));
         }
     }
 
