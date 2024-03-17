@@ -24,10 +24,10 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 
         EntityToAdd = new TeamModel();
 
-        Load();
+        LoadTeams();
     }
 
-    public void AddEntity()
+    public void SaveEntity()
     {
         if (!IsTeamValid(EntityToAdd))
             return;
@@ -37,19 +37,21 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
         _context.Teams.Add(team);
         _context.SaveChanges();
 
-        OnTeamAdded(team);
+        AddToCollection(team);
 
         EntityToAdd = new TeamModel();
+
+        LoadTeams();
     }
 
-    public void OnTeamAdded(Team team)
+    public void AddToCollection(Team team)
     {
         Entities.Add(new TeamRowViewModel(team, _context));
 
         ParentIdNames.Add(team.Id, team.Name);
     }
 
-    public void Load()
+    private void LoadTeams()
     {
         Entities = new List<IChildEntityViewModel<ITeam>>();
         ParentIdNames = new Dictionary<uint?, string>();
@@ -58,7 +60,7 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 
         foreach (var team in teamsList)
         {
-            OnTeamAdded(team);
+            AddToCollection(team);
         }
     }
 

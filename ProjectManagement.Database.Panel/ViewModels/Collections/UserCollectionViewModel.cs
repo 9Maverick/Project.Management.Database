@@ -26,7 +26,7 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
         LoadUsers();
     }
 
-    public void AddEntity()
+    public void SaveEntity()
     {
         if (!IsUserValid(EntityToAdd)) return;
 
@@ -35,9 +35,9 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        Entities.Add(new UserRowViewModel(user));
-
         EntityToAdd = new UserModel();
+
+        LoadUsers();
     }
 
     private void LoadUsers()

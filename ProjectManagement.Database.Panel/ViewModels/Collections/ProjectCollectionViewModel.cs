@@ -26,7 +26,7 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
         LoadProjects();
     }
 
-    public void AddEntity()
+    public void SaveEntity()
     {
         if (!IsProjectValid(EntityToAdd))
             return;
@@ -36,9 +36,9 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
         _context.Projects.Add(project);
         _context.SaveChanges();
 
-        Entities.Add(new ProjectRowViewModel(project));
-
         EntityToAdd = new ProjectModel();
+
+        LoadProjects();
     }
 
 

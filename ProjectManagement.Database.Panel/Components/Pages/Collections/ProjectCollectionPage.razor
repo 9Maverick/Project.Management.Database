@@ -24,7 +24,7 @@
                 <input @bind="viewModel.EntityToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
             </td>
             <td>
-                <button @onclick="viewModel.AddEntity">Add</button>
+                <button @onclick="viewModel.SaveEntity">Add</button>
             </td>
         </tr>
         @foreach (var project in viewModel.Entities)
