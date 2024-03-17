@@ -4,27 +4,34 @@ using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels.Entities;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class UserViewModel : IUserViewModel
+public class UserPageViewModel : IUserViewModel
 {
-    private Action<IUserViewModel> OnDeleted;
 
     private DatabaseContext _context;
     private User _user;
 
-    public uint Id { get; set; }
+    private uint _id;
+
+    public uint Id
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            LoadUser();
+        }
+    }
     public IUser Entity { get; set; }
+    public IUser? Parent { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; set; }
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
-    public UserViewModel(User project, DatabaseContext context, Action<IUserViewModel> onDeleted)
+    public UserPageViewModel(DatabaseContext context)
     {
         _context = context;
-        _user = project;
-
-        Entity = project;
-        OnDeleted = onDeleted;
     }
 
     public void Cancel()
@@ -38,9 +45,7 @@ public class UserViewModel : IUserViewModel
         _context.Users.Remove(_user);
         _context.SaveChanges();
 
-        IsLoaded = true;
-
-        OnDeleted(this);
+        IsLoaded = false;
     }
 
     public void Edit()
@@ -54,7 +59,22 @@ public class UserViewModel : IUserViewModel
         _user.SetUser(Entity);
         _context.SaveChanges();
 
-        Entity = _user;
         IsEditing = false;
+
+        LoadUser();
+    }
+
+    private void LoadUser()
+    {
+        if (Id == 0) return;
+
+        var user = _context.Users.Find(Id);
+
+        if (user == null) return;
+
+        _user = user;
+        Entity = _user;
+
+        IsLoaded = true;
     }
 }

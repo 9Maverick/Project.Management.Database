@@ -24,6 +24,7 @@ public static class ServicesConfiguration
     public static void AddPagesViewModels(this IServiceCollection services)
     {
         services.AddTransient<IEditableTeamViewModel, TeamPageViewModel>();
+        services.AddTransient<IUserViewModel, UserPageViewModel>();
         services.AddTransient<IProjectViewModel, ProjectPageViewModel>();
     }
 }

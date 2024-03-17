@@ -3,8 +3,8 @@ using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
-using ProjectManagement.Database.Panel.ViewModels.Entities;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
+using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
@@ -33,7 +33,7 @@ public class UsersCollectionViewModel : IEntityCollectionViewModel<IUser>
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        Entities.Add(new UserViewModel(user, _context, OnUserDeleted));
+        Entities.Add(new UserRowViewModel(user));
 
         EntityToAdd = new UserModel();
     }
@@ -51,7 +51,7 @@ public class UsersCollectionViewModel : IEntityCollectionViewModel<IUser>
 
         foreach (var project in usersList)
         {
-            Entities.Add(new UserViewModel(project, _context, OnUserDeleted));
+            Entities.Add(new UserRowViewModel(project));
         }
     }
 

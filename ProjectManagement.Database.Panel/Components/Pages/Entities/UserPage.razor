@@ -1,0 +1,55 @@
+﻿@page "/users/{id:int}"
+@attribute [StreamRendering]
+
+@inject IUserViewModel viewModel
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        viewModel.Id = (uint)Id;
+        return base.OnInitializedAsync();
+    }
+}
+
+<PageTitle>Team</PageTitle>
+
+@if(!viewModel.IsLoaded)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <h1>@viewModel.Entity.Name</h1>
+
+    @if (!viewModel.IsEditing)
+    {
+        <p>
+            Name:
+            @viewModel.Entity.Name
+
+        </p>
+        <p>
+            <button @onclick="viewModel.Edit">Edit</button>
+        </p>
+    }
+    else
+    {
+        <p>
+            Name:
+            <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
+
+        </p>
+        <p>
+            <button @onclick="viewModel.Save">Save</button>
+            <button @onclick="viewModel.Cancel">Cancel</button>
+        </p>
+    }
+    <p>
+        <button @onclick="viewModel.Delete">Delete</button>
+    </p>
+}
