@@ -10,7 +10,6 @@ public interface IEntityViewModel<T>
 
 public interface IProjectViewModel : IEntityViewModel<IProject>, IEditableViewModel;
 public interface IUserViewModel : IEntityViewModel<IUser>, IEditableViewModel;
-public interface ITeamViewModel : IChildEntityViewModel<ITeam>, IEditableViewModel;
 
 
 public interface IChildEntityViewModel<T> : IEntityViewModel<T>
