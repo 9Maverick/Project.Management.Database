@@ -38,11 +38,6 @@ public class UsersCollectionViewModel : IEntityCollectionViewModel<IUser>
         EntityToAdd = new UserModel();
     }
 
-    public void OnUserDeleted(IUserViewModel user)
-    {
-        Entities.Remove(user);
-    }
-
     private void LoadUsers()
     {
         Entities = new List<IEntityViewModel<IUser>>();

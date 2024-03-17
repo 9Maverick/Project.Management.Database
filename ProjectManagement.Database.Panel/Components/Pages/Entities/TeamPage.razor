@@ -1,7 +1,7 @@
 ﻿@page "/teams/{id:int}"
 @attribute [StreamRendering]
 
-@inject IEditableTeamViewModel viewModel
+@inject IEditableChildEntityViewModel<ITeam> viewModel
 
 @code
 {

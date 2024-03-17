@@ -1,7 +1,7 @@
 ﻿@page "/users/{id:int}"
 @attribute [StreamRendering]
 
-@inject IUserViewModel viewModel
+@inject IEditableEntityViewModel<IUser> viewModel
 
 @code
 {

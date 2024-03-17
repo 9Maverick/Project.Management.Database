@@ -1,7 +1,7 @@
 ﻿@page "/projects/{id:int}"
 @attribute [StreamRendering]
 
-@inject IProjectViewModel viewModel
+@inject IEditableEntityViewModel<IProject> viewModel
 
 @code
 {

@@ -6,7 +6,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class TeamPageViewModel : IEditableTeamViewModel
+public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
 {
 
     private DatabaseContext _context;

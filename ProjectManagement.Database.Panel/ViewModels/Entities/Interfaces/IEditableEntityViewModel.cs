@@ -1,6 +1,4 @@
-﻿using ProjectManagement.Database.Domain.Interfaces;
-
-namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
+﻿namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 public interface IEditableEntityViewModel<T> : IEntityViewModel<T>
 {
@@ -22,4 +20,3 @@ public interface IEditableChildEntityViewModel<T> : IChildEntityViewModel<T>
     public void Cancel();
     public void Delete();
 }
-public interface IEditableTeamViewModel : IEditableChildEntityViewModel<ITeam>;
