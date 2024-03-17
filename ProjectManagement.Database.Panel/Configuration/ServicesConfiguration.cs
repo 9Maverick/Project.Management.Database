@@ -16,9 +16,9 @@ public static class ServicesConfiguration
 
     public static void AddCollectionsViewModels(this IServiceCollection services)
     {
-        services.AddTransient<IEntityCollectionViewModel<IProject>, ProjectsCollectionViewModel>();
-        services.AddTransient<IEntityCollectionViewModel<IUser>, UsersCollectionViewModel>();
-        services.AddTransient<IChildEntityCollectionViewModel<ITeam>, TeamsCollectionViewModel>();
+        services.AddTransient<IEntityCollectionViewModel<IProject>, ProjectCollectionViewModel>();
+        services.AddTransient<IEntityCollectionViewModel<IUser>, UserCollectionViewModel>();
+        services.AddTransient<IChildEntityCollectionViewModel<ITeam>, TeamCollectionViewModel>();
     }
 
     public static void AddPagesViewModels(this IServiceCollection services)

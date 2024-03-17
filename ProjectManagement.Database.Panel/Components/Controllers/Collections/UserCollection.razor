@@ -1,0 +1,30 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public IEntityCollectionViewModel<IUser> viewModel { get; set; } = null!;
+}
+
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
+            </td>
+            <td>
+                <button @onclick="viewModel.AddEntity">Add</button>
+            </td>
+        </tr>
+        @foreach (var user in viewModel.Entities)
+        {
+            <UserRow viewModel="user" />
+        }
+    </tbody>
+</table>

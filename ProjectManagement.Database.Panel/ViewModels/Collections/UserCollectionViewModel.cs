@@ -8,14 +8,14 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class UsersCollectionViewModel : IEntityCollectionViewModel<IUser>
+public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
 {
     private DatabaseContext _context;
 
     public List<IEntityViewModel<IUser>> Entities { get; set; }
     public IUser EntityToAdd { get; set; }
 
-    public UsersCollectionViewModel(DatabaseContext context)
+    public UserCollectionViewModel(DatabaseContext context)
     {
         _context = context;
 

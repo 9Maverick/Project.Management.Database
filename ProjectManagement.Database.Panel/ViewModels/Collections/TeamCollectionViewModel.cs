@@ -8,7 +8,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class TeamsCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
+public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 {
     private DatabaseContext _context;
 
@@ -16,7 +16,7 @@ public class TeamsCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
     public Dictionary<uint?, string> ParentIdNames { get; set; }
     public ITeam EntityToAdd { get; set; }
 
-    public TeamsCollectionViewModel(DatabaseContext context)
+    public TeamCollectionViewModel(DatabaseContext context)
     {
         _context = context;
 
