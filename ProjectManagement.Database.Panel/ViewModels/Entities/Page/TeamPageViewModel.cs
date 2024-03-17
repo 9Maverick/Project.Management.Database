@@ -4,29 +4,34 @@ using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-namespace ProjectManagement.Database.Panel.ViewModels.Entities;
+namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class TeamViewModel : ITeamViewModel
+public class TeamPageViewModel : IEditableTeamViewModel
 {
-    private Action<ITeamViewModel> OnDeleted;
 
     private DatabaseContext _context;
     private Team _team;
 
-    public uint Id { get; set; }
+    private uint _id;
+
+    public uint Id
+    {
+        get => _id;
+        set
+        {
+            _id = value;
+            LoadTeam();
+        }
+    }
     public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; set; }
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
-    public TeamViewModel(Team team, DatabaseContext context, Action<ITeamViewModel> onDeleted)
+    public TeamPageViewModel(DatabaseContext context)
     {
         _context = context;
-        _team = team;
-
-        Entity = _team;
-
-        LoadParent();
     }
 
     public void Cancel()
@@ -40,9 +45,7 @@ public class TeamViewModel : ITeamViewModel
         _context.Teams.Remove(_team);
         _context.SaveChanges();
 
-        IsLoaded = true;
-
-        OnDeleted(this);
+        IsLoaded = false;
     }
 
     public void Edit()
@@ -56,10 +59,40 @@ public class TeamViewModel : ITeamViewModel
         _team.SetTeam(Entity);
         _context.SaveChanges();
 
-        Entity = _team;
         IsEditing = false;
 
+        LoadTeam();
+    }
 
+    private void LoadTeam()
+    {
+        if (Id == 0) return;
+
+        var team = _context.Teams.Find(Id);
+
+        if (team == null) return;
+
+        _team = team;
+        Entity = _team;
+
+        LoadParentVariants();
+        LoadParent();
+
+        IsLoaded = true;
+    }
+
+    private void LoadParentVariants()
+    {
+        ParentIdNames = new Dictionary<uint?, string>();
+
+        var teamsList = _context.Teams
+            .Where(team => team.Id != Id)
+            .ToList();
+
+        foreach (var team in teamsList)
+        {
+            ParentIdNames.Add(team.Id, team.Name);
+        }
     }
 
     private void LoadParent()

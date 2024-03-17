@@ -1,39 +1,18 @@
 ﻿@code {
     [Parameter, EditorRequired]
-    public ITeamViewModel viewModel { get; set; } = null!;
+    public IChildEntityViewModel<ITeam> viewModel { get; set; } = null!;
 }
 
-@if(!viewModel.IsLoaded)
-{
-    @if (!viewModel.IsEditing)
-    {
-
-        <tr>
-            <td>
+<tr>
+    <td>
         @viewModel.Entity.Name
-            </td>
-            <td>
-                @viewModel.Parent?.Name
-            </td>
-            <td>
-                <button @onclick="viewModel.Edit">Edit</button>
-                <button @onclick="viewModel.Delete">Delete</button>
-            </td>
-        </tr>
-    }
-    else
-    {
-        <tr>
-            <td>
-                <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
-            </td>
-            <td>
-                <input @bind="viewModel.Entity.ParentId" class="form-control" placeholder="ParentId" />
-            </td>
-            <td>
-                <button @onclick="viewModel.Save">Save</button>
-                <button @onclick="viewModel.Cancel">Cancel</button>
-            </td>
-        </tr>
-    }
-}
+    </td>
+    <td>
+        @viewModel.Parent?.Name
+    </td>
+    <td>
+        <NavLink href=@($"teams/{viewModel.Id}")>
+            <button>Open</button>
+        </NavLink>
+    </td>
+</tr>

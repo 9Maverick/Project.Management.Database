@@ -21,7 +21,16 @@
                 <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
             </td>
             <td>
-                <input @bind="viewModel.TeamToAdd.ParentId" class="form-control" placeholder="Name" />
+                <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
+                                DataSource="viewModel.ParentIdNames" 
+                                @bind-Value="viewModel.EntityToAdd.ParentId"
+                                Placeholder="Select Parent">
+                    
+                    <DropDownListFieldSettings Text="Value" Value="Key">
+                    </DropDownListFieldSettings>
+
+
+                </SfDropDownList>
             </td>
             <td>
                 <button @onclick="viewModel.AddEntity">Add</button>
