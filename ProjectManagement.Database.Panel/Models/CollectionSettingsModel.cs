@@ -2,6 +2,5 @@
 
 public class CollectionSettingsModel<T>
 {
-    public Action? Filter { get; set; }
-    public T? DefaultValue { get; set; }
+    public T? PresetValue { get; set; }
 }

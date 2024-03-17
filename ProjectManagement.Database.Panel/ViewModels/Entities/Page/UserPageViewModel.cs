@@ -6,7 +6,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class UserPageViewModel : IEditableEntityViewModel<IUser>
+public class UserPageViewModel : IEntityPageViewModel<IUser>
 {
 
     private DatabaseContext _context;

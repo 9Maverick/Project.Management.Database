@@ -6,7 +6,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
-public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
+public class TeamPageViewModel : ITeamPageViewModel
 {
 
     private DatabaseContext _context;
@@ -25,6 +25,8 @@ public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
     }
     public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
+    public List<Team> Children { get; set; }
+    public List<User> Users { get; set; }
     public Dictionary<uint?, string> ParentIdNames { get; set; }
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
@@ -33,6 +35,8 @@ public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
     {
         _context = context;
     }
+
+    #region Controls
 
     public void Cancel()
     {
@@ -64,6 +68,8 @@ public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
         LoadTeam();
     }
 
+    #endregion
+
     private void LoadTeam()
     {
         if (Id == 0) return;
@@ -72,13 +78,20 @@ public class TeamPageViewModel : IEditableChildEntityViewModel<ITeam>
 
         if (team == null) return;
 
-        _team = team;
-        Entity = _team;
+        SetTeam(team);
 
         LoadParentVariants();
         LoadParent();
 
         IsLoaded = true;
+    }
+
+    private void SetTeam(Team team)
+    {
+        _team = team;
+        Entity = team;
+        Users = team.Users.ToList();
+        Children = team.Children.ToList();
     }
 
     private void LoadParentVariants()

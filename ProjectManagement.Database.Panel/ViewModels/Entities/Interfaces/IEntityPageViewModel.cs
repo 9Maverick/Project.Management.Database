@@ -1,6 +1,6 @@
 ﻿namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
-public interface IEditableEntityViewModel<T> : IEntityViewModel<T>
+public interface IEntityPageViewModel<T> : IEntityViewModel<T>
 {
     public bool IsLoaded { get; set; }
     public bool IsEditing { get; set; }
@@ -10,7 +10,7 @@ public interface IEditableEntityViewModel<T> : IEntityViewModel<T>
     public void Delete();
 }
 
-public interface IEditableChildEntityViewModel<T> : IChildEntityViewModel<T>
+public interface IChildEntityPageViewModel<T> : IChildEntityViewModel<T>
 {
     public Dictionary<uint?, string> ParentIdNames { get; set; }
     public bool IsLoaded { get; set; }
