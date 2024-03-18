@@ -12,6 +12,7 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 {
     private DatabaseContext _context;
+    private List<Team> _teams;
 
     public CollectionSettingsModel<ITeam> Settings { get; set; }
     public List<IChildEntityViewModel<ITeam>> Entities { get; set; }
@@ -46,7 +47,17 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
         LoadTeams();
     }
 
-    public void AddToCollection(Team team)
+    public void SetTeams(List<Team> teams)
+    {
+        _teams = teams ?? new List<Team>();
+        LoadTeams();
+    }
+
+    private List<Team> GetTeams()
+    {
+        return _teams ?? _context.Teams.ToList();
+    }
+    private void AddToCollection(Team team)
     {
         Entities.Add(new TeamRowViewModel(team, _context));
 
@@ -58,7 +69,7 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
         Entities = new List<IChildEntityViewModel<ITeam>>();
         ParentIdNames = new Dictionary<uint?, string>();
 
-        var teamsList = _context.Teams.ToList();
+        var teamsList = GetTeams();
 
         foreach (var team in teamsList)
         {

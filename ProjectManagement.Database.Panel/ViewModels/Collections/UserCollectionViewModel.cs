@@ -12,6 +12,7 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
 {
     private DatabaseContext _context;
+    private List<User> _users;
 
     public CollectionSettingsModel<IUser> Settings { get; set; }
     public List<IEntityViewModel<IUser>> Entities { get; set; }
@@ -37,16 +38,27 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
         _context.Users.Add(user);
         _context.SaveChanges();
 
-        EntityToAdd = new UserModel();
+        SetEntityToAdd();
 
         LoadUsers();
+    }
+
+    public void SetUsers(List<User> users)
+    {
+        _users = users ?? new List<User>();
+        LoadUsers();
+    }
+
+    private List<User> GetUsers()
+    {
+        return _users ?? _context.Users.ToList();
     }
 
     private void LoadUsers()
     {
         Entities = new List<IEntityViewModel<IUser>>();
 
-        var usersList = _context.Users.ToList();
+        var usersList = GetUsers();
 
         foreach (var project in usersList)
         {

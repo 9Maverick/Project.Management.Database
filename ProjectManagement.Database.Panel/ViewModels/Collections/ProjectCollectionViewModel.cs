@@ -12,6 +12,7 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
 {
     private DatabaseContext _context;
+    private List<Project> _projects;
 
     public CollectionSettingsModel<IProject> Settings { get; set; }
 
@@ -44,12 +45,22 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
         LoadProjects();
     }
 
+    public void SetProjects(List<Project> projects)
+    {
+        _projects = projects;
+        LoadProjects();
+    }
+
+    private List<Project> GetProjects()
+    {
+        return _projects ?? _context.Projects.ToList();
+    }
 
     private void LoadProjects()
     {
         Entities = new List<IEntityViewModel<IProject>>();
 
-        var projectsList = _context.Projects.ToList();
+        var projectsList = GetProjects();
 
         foreach (var project in projectsList)
         {
