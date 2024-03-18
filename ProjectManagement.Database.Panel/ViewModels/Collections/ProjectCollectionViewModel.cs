@@ -14,6 +14,7 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
     private DatabaseContext _context;
 
     public CollectionSettingsModel<IProject> Settings { get; set; }
+
     public List<IEntityViewModel<IProject>> Entities { get; set; }
     public IProject EntityToAdd { get; set; }
 
