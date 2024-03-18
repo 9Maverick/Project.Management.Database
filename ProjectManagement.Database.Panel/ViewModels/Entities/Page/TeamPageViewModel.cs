@@ -2,13 +2,17 @@
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
+using ProjectManagement.Database.Panel.Models;
+using ProjectManagement.Database.Panel.ViewModels.Collections;
+using ProjectManagement.Database.Panel.ViewModels.Collections.Intefaces;
 using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
 public class TeamPageViewModel : ITeamPageViewModel
 {
-
+    private UserCollectionViewModel _userCollectionViewModel;
+    private TeamCollectionViewModel _childrenCollectionViewModel;
     private DatabaseContext _context;
     private Team _team;
 
@@ -25,22 +29,31 @@ public class TeamPageViewModel : ITeamPageViewModel
     }
     public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
-    public List<Team> Children { get; set; }
-    public List<User> Users { get; set; }
     public Dictionary<uint?, string> ParentIdNames { get; set; }
+
+    public List<User> Users { get; set; }
+    public List<Team> Children { get; set; }
+    public List<User> UsersSource { get; set; }
+
+
+    public IChildEntityCollectionViewModel<ITeam> ChildrenCollection { get => _childrenCollectionViewModel; }
+    public IEntityCollectionViewModel<IUser> UserCollection { get => _userCollectionViewModel; }
+
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
     public TeamPageViewModel(DatabaseContext context)
     {
         _context = context;
+        _userCollectionViewModel = new UserCollectionViewModel(context);
+        _childrenCollectionViewModel = new TeamCollectionViewModel(context);
     }
 
     #region Controls
 
     public void Cancel()
     {
-        Entity = _team;
+        SetView(_team);
         IsEditing = false;
     }
 
@@ -54,13 +67,13 @@ public class TeamPageViewModel : ITeamPageViewModel
 
     public void Edit()
     {
-        Entity = new TeamModel(_team);
+        SetView(new TeamModel(_team));
         IsEditing = true;
     }
 
     public void Save()
     {
-        _team.SetTeam(Entity);
+        SetModel();
         _context.SaveChanges();
 
         IsEditing = false;
@@ -78,20 +91,55 @@ public class TeamPageViewModel : ITeamPageViewModel
 
         if (team == null) return;
 
-        SetTeam(team);
+        _team = team;
+        SetView(_team);
 
         LoadParentVariants();
         LoadParent();
+        LoadSources();
 
         IsLoaded = true;
     }
 
-    private void SetTeam(Team team)
+    private void SetView(ITeam team)
     {
-        _team = team;
         Entity = team;
-        Users = team.Users.ToList();
-        Children = team.Children.ToList();
+
+        Users = _team.Users?.ToList();
+        Children = _team.Children?.ToList();
+
+        _userCollectionViewModel.SetUsers(Users);
+        _childrenCollectionViewModel.SetTeams(Children);
+    }
+
+    private void SetModel()
+    {
+        _team.SetTeam(Entity);
+        _team.Users = Users;
+        _team.Children = Children;
+    }
+
+    private void SetCollectionsSettings()
+    {
+        var userCollectionSettings = new CollectionSettingsModel<IUser>()
+        {
+            IsImmutable = true,
+        };
+        _userCollectionViewModel.Settings = userCollectionSettings;
+
+        var childrenCollectionSettings = new CollectionSettingsModel<ITeam>()
+        {
+            DefaultValue = new TeamModel()
+            {
+                ParentId = Id
+            }
+        };
+        _childrenCollectionViewModel.Settings = childrenCollectionSettings;
+    }
+
+    private void LoadSources()
+    {
+        UsersSource = _context.Users.ToList();
     }
 
     private void LoadParentVariants()

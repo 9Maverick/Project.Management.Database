@@ -1,7 +1,7 @@
 ﻿@page "/teams/{id:int}"
 @attribute [StreamRendering]
 
-@inject IChildEntityPageViewModel<ITeam> viewModel
+@inject ITeamPageViewModel viewModel
 
 @code
 {
@@ -48,6 +48,10 @@ else
         <p>
             <button @onclick="viewModel.Edit">Edit</button>
         </p>
+
+        <UserCollection viewModel="viewModel.UserCollection" />
+
+        <TeamCollection viewModel="viewModel.ChildrenCollection" />
     }
     else
     {
@@ -68,6 +72,20 @@ else
 
 
             </SfDropDownList>
+
+        </p>
+        <p>
+            Members:
+            <SfMultiSelect TValue="List<User>" TItem="User"
+                            DataSource="viewModel.UsersSource"
+                            @bind-Value="viewModel.Users"
+                            Placeholder="Members">
+
+                <MultiSelectFieldSettings Text="Name">
+                </MultiSelectFieldSettings>
+
+
+            </SfMultiSelect>
 
         </p>
         <p>
