@@ -3,7 +3,7 @@
 public interface IEntityViewModel<T>
 {
     public uint Id { get; set; }
-    public T Entity { get; set; }
+    public T Entity { get; }
 }
 
 public interface IChildEntityViewModel<T> : IEntityViewModel<T>

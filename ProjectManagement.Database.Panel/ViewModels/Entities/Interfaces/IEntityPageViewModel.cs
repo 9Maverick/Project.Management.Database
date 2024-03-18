@@ -12,9 +12,9 @@ public interface IEntityPageViewModel<T> : IEntityViewModel<T>
 
 public interface IChildEntityPageViewModel<T> : IChildEntityViewModel<T>
 {
-    public Dictionary<uint?, string> ParentIdNames { get; set; }
-    public bool IsLoaded { get; set; }
-    public bool IsEditing { get; set; }
+    public Dictionary<uint?, string> ParentIdNames { get; }
+    public bool IsLoaded { get; }
+    public bool IsEditing { get; }
     public void Edit();
     public void Save();
     public void Cancel();
