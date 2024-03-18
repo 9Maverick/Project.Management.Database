@@ -5,40 +5,4 @@
 
 <PageTitle>Teams</PageTitle>
 
-<h1>Teams</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Parent</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
-            </td>
-            <td>
-                <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
-                                DataSource="viewModel.ParentIdNames" 
-                                @bind-Value="viewModel.EntityToAdd.ParentId"
-                                Placeholder="Select Parent">
-                    
-                    <DropDownListFieldSettings Text="Value" Value="Key">
-                    </DropDownListFieldSettings>
-
-
-                </SfDropDownList>
-            </td>
-            <td>
-                <button @onclick="viewModel.SaveEntity">Add</button>
-            </td>
-        </tr>
-        @foreach (var team in viewModel.Entities)
-        {
-            <TeamRow viewModel="team"/>
-        }
-    </tbody>
-</table>
+<TeamCollection viewModel="viewModel" />
