@@ -22,7 +22,9 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
     {
         _context = context;
 
-        EntityToAdd = new ProjectModel();
+        Settings = new CollectionSettingsModel<IProject>();
+
+        SetEntityToAdd();
 
         LoadProjects();
     }
@@ -37,7 +39,7 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
         _context.Projects.Add(project);
         _context.SaveChanges();
 
-        EntityToAdd = new ProjectModel();
+        SetEntityToAdd();
 
         LoadProjects();
     }
@@ -52,6 +54,26 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
         foreach (var project in projectsList)
         {
             Entities.Add(new ProjectRowViewModel(project));
+        }
+    }
+
+    private void SetEntityToAdd()
+    {
+
+        EntityToAdd = new ProjectModel();
+
+        if (Settings.DefaultValue == null) return;
+
+        var defaultValue = Settings.DefaultValue;
+
+        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
+        {
+            EntityToAdd.Name = defaultValue.Name;
+        }
+
+        if (!string.IsNullOrWhiteSpace(defaultValue.Abbreviation))
+        {
+            EntityToAdd.Abbreviation = defaultValue.Abbreviation;
         }
     }
 

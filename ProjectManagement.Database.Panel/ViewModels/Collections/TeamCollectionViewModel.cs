@@ -22,7 +22,9 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
     {
         _context = context;
 
-        EntityToAdd = new TeamModel();
+        Settings = new CollectionSettingsModel<ITeam>();
+
+        SetEntityToAdd();
 
         LoadTeams();
     }
@@ -39,7 +41,7 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
 
         AddToCollection(team);
 
-        EntityToAdd = new TeamModel();
+        SetEntityToAdd();
 
         LoadTeams();
     }
@@ -61,6 +63,25 @@ public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
         foreach (var team in teamsList)
         {
             AddToCollection(team);
+        }
+    }
+
+    private void SetEntityToAdd()
+    {
+
+        EntityToAdd = new TeamModel();
+
+        if (Settings.DefaultValue == null) return;
+
+        var defaultValue = Settings.DefaultValue;
+
+        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
+        {
+            EntityToAdd.Name = defaultValue.Name;
+        }
+        if (defaultValue.ParentId != null && defaultValue.ParentId > 0)
+        {
+            EntityToAdd.ParentId = defaultValue.ParentId;
         }
     }
 

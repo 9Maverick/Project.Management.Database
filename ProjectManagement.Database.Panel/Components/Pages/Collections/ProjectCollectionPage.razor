@@ -16,17 +16,21 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
-            </td>
-            <td>
-                <input @bind="viewModel.EntityToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
-            </td>
-            <td>
-                <button @onclick="viewModel.SaveEntity">Add</button>
-            </td>
-        </tr>
+        
+        @if (!viewModel.Settings.IsImmutable)
+        {
+            <tr>
+                <td>
+                    <input @bind="viewModel.EntityToAdd.Name" class="form-control" placeholder="Name" />
+                </td>
+                <td>
+                    <input @bind="viewModel.EntityToAdd.Abbreviation" class="form-control" placeholder="Abbreviation" />
+                </td>
+                <td>
+                    <button @onclick="viewModel.SaveEntity">Add</button>
+                </td>
+            </tr>
+        }
         @foreach (var project in viewModel.Entities)
         {
             <ProjectRow viewModel="project"/>

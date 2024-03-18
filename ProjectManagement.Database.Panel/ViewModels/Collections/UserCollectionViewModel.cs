@@ -21,7 +21,9 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
     {
         _context = context;
 
-        EntityToAdd = new UserModel();
+        Settings = new CollectionSettingsModel<IUser>();
+
+        SetEntityToAdd();
 
         LoadUsers();
     }
@@ -49,6 +51,21 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
         foreach (var project in usersList)
         {
             Entities.Add(new UserRowViewModel(project));
+        }
+    }
+
+    private void SetEntityToAdd()
+    {
+
+        EntityToAdd = new UserModel();
+
+        if (Settings.DefaultValue == null) return;
+
+        var defaultValue = Settings.DefaultValue;
+
+        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
+        {
+            EntityToAdd.Name = defaultValue.Name;
         }
     }
 
