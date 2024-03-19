@@ -1,0 +1,25 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public INestedEntityViewModel<ITicket, IProject> viewModel { get; set; } = null!;
+}
+
+<tr>
+    <td>
+        @viewModel.Entity.Number
+    </td>
+    <td>
+        @viewModel.Entity.Title
+    </td>
+    <td>
+        @viewModel.Parent?.Number
+        @viewModel.Parent?.Title
+    </td>
+    <td>
+        @viewModel.Owner.Name
+    </td>
+    <td>
+        <NavLink href=@($"tickets/{viewModel.Id}")>
+            <button>Open</button>
+        </NavLink>
+    </td>
+</tr>

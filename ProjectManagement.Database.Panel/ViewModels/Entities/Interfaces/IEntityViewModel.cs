@@ -11,7 +11,7 @@ public interface IEntityViewModel<T>
 
 public interface IOwnedEntityViewModel<T> : IEntityViewModel<T>
 {
-    public IUser Owner { get; set; }
+    public IUser Owner { get; }
 }
 
 public interface INestedEntityViewModel<T, TMaster> : IOwnedEntityViewModel<T>
