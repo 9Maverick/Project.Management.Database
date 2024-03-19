@@ -51,6 +51,7 @@ else
         <br />
         @if(viewModel.UserCollection.Entities.Count > 0)
         {
+            <h1>Users</h1>
             <UserCollection viewModel="viewModel.UserCollection" />
         }
         else
@@ -60,6 +61,7 @@ else
 
         @if(viewModel.ChildrenCollection.Entities.Count > 0)
         {
+            <h1>Child teams</h1>
             <TeamCollection viewModel="viewModel.ChildrenCollection" />
         }
         else
