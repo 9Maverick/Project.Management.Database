@@ -1,4 +1,5 @@
-﻿using ProjectManagement.Database.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectManagement.Database.Data;
 using ProjectManagement.Database.Domain.Entities;
 using ProjectManagement.Database.Domain.Interfaces;
 using ProjectManagement.Database.Domain.Models;
@@ -88,7 +89,10 @@ public class TeamPageViewModel : ITeamPageViewModel
     {
         if (Id == 0) return;
 
-        var team = _context.Teams.Find(Id);
+        var team = _context.Teams
+            .Include(team => team.Users)
+            .Where(team => team.Id == Id)
+            .FirstOrDefault();
 
         if (team == null) return;
 
