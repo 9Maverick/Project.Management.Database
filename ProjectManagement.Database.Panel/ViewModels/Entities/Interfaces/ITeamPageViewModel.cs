@@ -9,6 +9,6 @@ public interface ITeamPageViewModel : IChildEntityPageViewModel<ITeam>
     public List<User> Users { get; set; }
     public List<User> UsersSource { get; set; }
 
-    public IChildEntityCollectionViewModel<ITeam> ChildrenCollection { get; }
+    public IEntityCollectionViewModel<ITeam> ChildrenCollection { get; }
     public IEntityCollectionViewModel<IUser> UserCollection { get; }
 }
