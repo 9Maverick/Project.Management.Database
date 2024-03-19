@@ -48,10 +48,24 @@ else
         <p>
             <button @onclick="viewModel.Edit">Edit</button>
         </p>
+        <br />
+        @if(viewModel.UserCollection.Entities.Count > 0)
+        {
+            <UserCollection viewModel="viewModel.UserCollection" />
+        }
+        else
+        {
+            <p>There are no users in this team</p>
+        }
 
-        <UserCollection viewModel="viewModel.UserCollection" />
-
-        <TeamCollection viewModel="viewModel.ChildrenCollection" />
+        @if(viewModel.ChildrenCollection.Entities.Count > 0)
+        {
+            <TeamCollection viewModel="viewModel.ChildrenCollection" />
+        }
+        else
+        {
+            <p>There are no children for this team</p>
+        }
     }
     else
     {
