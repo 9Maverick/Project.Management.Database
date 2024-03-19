@@ -1,7 +1,7 @@
 ﻿@page "/users/{id:int}"
 @attribute [StreamRendering]
 
-@inject IEntityPageViewModel<IUser> viewModel
+@inject IUserPageViewModel viewModel
 
 @code
 {
@@ -36,12 +36,38 @@ else
         <p>
             <button @onclick="viewModel.Edit">Edit</button>
         </p>
+
+        <br />
+
+        @if (viewModel.TeamCollection.Entities.Count > 0)
+        {
+            <h1>Child teams</h1>
+            <TeamCollection viewModel="viewModel.TeamCollection" />
+        }
+        else
+        {
+            <p>This user is not a member of any team</p>
+        }
     }
     else
     {
         <p>
             Name:
             <input @bind="viewModel.Entity.Name" class="form-control" placeholder="Name" />
+
+        </p>
+        <p>
+            Teams:
+            <SfMultiSelect TValue="List<Team>" TItem="Team"
+                           DataSource="viewModel.TeamsSource"
+                           @bind-Value="viewModel.Teams"
+                           Placeholder="Members">
+
+                <MultiSelectFieldSettings Text="Name">
+                </MultiSelectFieldSettings>
+
+
+            </SfMultiSelect>
 
         </p>
         <p>
