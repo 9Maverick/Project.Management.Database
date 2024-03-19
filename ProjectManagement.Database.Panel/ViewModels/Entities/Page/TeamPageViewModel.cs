@@ -31,7 +31,7 @@ public class TeamPageViewModel : ITeamPageViewModel
     }
     public ITeam Entity { get; set; }
     public ITeam? Parent { get; set; }
-    public Dictionary<uint?, string> ParentIdNames { get; set; }
+    public Dictionary<uint?, string> ParentSource { get; set; }
 
     public List<User> Users { get; set; }
     public List<Team> Children { get; set; }
@@ -146,7 +146,7 @@ public class TeamPageViewModel : ITeamPageViewModel
 
     private void LoadParentVariants()
     {
-        ParentIdNames = new Dictionary<uint?, string>();
+        ParentSource = new Dictionary<uint?, string>();
 
         var teamsList = _context.Teams
             .Where(team => team.Id != Id)
@@ -154,7 +154,7 @@ public class TeamPageViewModel : ITeamPageViewModel
 
         foreach (var team in teamsList)
         {
-            ParentIdNames.Add(team.Id, team.Name);
+            ParentSource.Add(team.Id, team.Name);
         }
     }
 
