@@ -1,0 +1,69 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public INestedEntityCollectionViewModel<ITicket, IProject> viewModel { get; set; } = null!;
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Title</th>
+            <th>Parent</th>
+            <th>Creator</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!viewModel.Settings.IsImmutable)
+        {
+            <tr>
+                <td>
+                    <SfDropDownList TItem="KeyValuePair<uint, string>" TValue="uint"
+                                    DataSource="viewModel.MasterSource"
+                                    @bind-Value="viewModel.EntityToAdd.ProjectId"
+                                    Placeholder="Select Project">
+
+                        <DropDownListFieldSettings Text="Value" Value="Key">
+                        </DropDownListFieldSettings>
+
+
+                    </SfDropDownList>
+                </td>
+                <td>
+                    <input @bind="viewModel.EntityToAdd.Title" class="form-control" placeholder="Title" />
+                </td>
+                <td>
+                    <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
+                                    DataSource="viewModel.ParentSource"
+                                    @bind-Value="viewModel.EntityToAdd.ParentId"
+                                    Placeholder="Select Parent">
+
+                        <DropDownListFieldSettings Text="Value" Value="Key">
+                        </DropDownListFieldSettings>
+
+
+                    </SfDropDownList>
+                </td>
+                <td>
+                    <SfDropDownList TItem="KeyValuePair<uint, string>" TValue="uint"
+                                    DataSource="viewModel.OwnerSource"
+                                    @bind-Value="viewModel.EntityToAdd.CreatorId"
+                                    Placeholder="Select Creator">
+
+                        <DropDownListFieldSettings Text="Value" Value="Key">
+                        </DropDownListFieldSettings>
+
+
+                    </SfDropDownList>
+                </td>
+                <td>
+                    <button @onclick="viewModel.SaveEntity">Add</button>
+                </td>
+            </tr>
+        }
+        @foreach (var ticket in viewModel.Entities)
+        {
+            <TicketRow viewModel="ticket" />
+        }
+    </tbody>
+</table>

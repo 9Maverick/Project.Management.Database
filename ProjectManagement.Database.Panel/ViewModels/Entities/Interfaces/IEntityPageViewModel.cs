@@ -17,10 +17,10 @@ public interface IChildEntityPageViewModel<T> : IEntityPageViewModel<T>, IEntity
 
 public interface IOwnedEntityPageViewModel<T> : IEntityPageViewModel<T>, IOwnedEntityViewModel<T>
 {
-    public Dictionary<uint?, string> OwnerSource { get; }
+    public Dictionary<uint, string> OwnerSource { get; }
 }
 
 public interface INestedEntityPageViewModel<T, TMaster> : IOwnedEntityPageViewModel<T>, INestedEntityViewModel<T, TMaster>
 {
-    public Dictionary<uint?, string> MasterSource { get; }
+    public Dictionary<uint, string> MasterSource { get; }
 }

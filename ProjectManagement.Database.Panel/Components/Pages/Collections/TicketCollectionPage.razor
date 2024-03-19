@@ -1,0 +1,10 @@
+﻿@page "/tickets"
+@attribute [StreamRendering]
+
+@inject INestedEntityCollectionViewModel<ITicket, IProject> viewModel
+
+<PageTitle>Tickets</PageTitle>
+
+<h1>Tickets</h1>
+
+<TicketCollection viewModel="viewModel" />
