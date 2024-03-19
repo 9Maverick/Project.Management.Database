@@ -8,13 +8,9 @@ public class Ticket : ITicket
     public uint Id { get; set; }
     public string Number { get; set; } = string.Empty;
     public uint ProjectId { get; set; }
-    public Project? Project { get; set; }
     public uint CreatorId { get; set; }
-    public User? Creator { get; set; }
     public uint? AssigneeId { get; set; }
-    public User? Assignee { get; set; }
     public uint? ParentId { get; set; }
-    public Ticket? Parent { get; set; }
     public TicketType Type { get; set; } = TicketType.Story;
 
     public string? Title { get; set; }
@@ -25,6 +21,11 @@ public class Ticket : ITicket
     public Status Status { get; set; } = Status.Open;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    public Project? Project { get; set; }
+    public User? Creator { get; set; }
+    public User? Assignee { get; set; }
+    public Ticket? Parent { get; set; }
 
     public List<Ticket> Children { get; set; }
     public List<Ticket> LinkedTo { get; set; }
