@@ -38,7 +38,7 @@ public class TeamRowViewModel : IEntityViewModel<ITeam>
         if (parentId == null || parentId == 0) return;
 
         Parent = _context.Teams
-            .Where(e => e.Id == parentId)
+            .Where(team => team.Id == parentId)
             .FirstOrDefault();
     }
 }
