@@ -10,13 +10,17 @@ public interface IEntityPageViewModel<T> : IEntityViewModel<T>
     public void Delete();
 }
 
-public interface IChildEntityPageViewModel<T> : IChildEntityViewModel<T>
+public interface IChildEntityPageViewModel<T> : IEntityPageViewModel<T>, IChildEntityViewModel<T>
 {
     public Dictionary<uint?, string> ParentSource { get; }
-    public bool IsLoaded { get; }
-    public bool IsEditing { get; }
-    public void Edit();
-    public void Save();
-    public void Cancel();
-    public void Delete();
+}
+
+public interface IOwnedEntityPageViewModel<T> : IEntityPageViewModel<T>, IOwnedEntityViewModel<T>
+{
+    public Dictionary<uint?, string> OwnerSource { get; }
+}
+
+public interface INestedEntityPageViewModel<T, TMaster> : IOwnedEntityPageViewModel<T>, INestedEntityViewModel<T, TMaster>
+{
+    public Dictionary<uint?, string> MasterSource { get; }
 }
