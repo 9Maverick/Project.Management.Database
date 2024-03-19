@@ -18,6 +18,8 @@ public class UserRowViewModel : IEntityViewModel<IUser>
         }
     }
 
+    public IUser? Parent => throw new NotImplementedException();
+
     public UserRowViewModel(User user)
     {
         _user = user;

@@ -18,6 +18,8 @@ public class ProjectRowViewModel : IEntityViewModel<IProject>
         }
     }
 
+    public IProject? Parent => throw new NotImplementedException();
+
     public ProjectRowViewModel(Project project)
     {
         _project = project;

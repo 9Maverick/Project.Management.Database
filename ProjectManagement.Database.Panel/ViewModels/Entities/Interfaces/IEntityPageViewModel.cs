@@ -10,7 +10,7 @@ public interface IEntityPageViewModel<T> : IEntityViewModel<T>
     public void Delete();
 }
 
-public interface IChildEntityPageViewModel<T> : IEntityPageViewModel<T>, IChildEntityViewModel<T>
+public interface IChildEntityPageViewModel<T> : IEntityPageViewModel<T>, IEntityViewModel<T>
 {
     public Dictionary<uint?, string> ParentSource { get; }
 }

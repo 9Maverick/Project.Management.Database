@@ -5,7 +5,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
-public class TeamRowViewModel : IChildEntityViewModel<ITeam>
+public class TeamRowViewModel : IEntityViewModel<ITeam>
 {
 
     private DatabaseContext _context;
