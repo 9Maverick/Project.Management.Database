@@ -16,7 +16,7 @@ public class TeamCollectionViewModel : IEntityCollectionViewModel<ITeam>
 
     public CollectionSettingsModel<ITeam> Settings { get; set; }
     public List<IEntityViewModel<ITeam>> Entities { get; set; }
-    public Dictionary<uint?, string> ParentIdNames { get; set; }
+    public Dictionary<uint?, string> ParentSource { get; set; }
     public ITeam EntityToAdd { get; set; }
 
     public TeamCollectionViewModel(DatabaseContext context)
@@ -61,13 +61,13 @@ public class TeamCollectionViewModel : IEntityCollectionViewModel<ITeam>
     {
         Entities.Add(new TeamRowViewModel(team, _context));
 
-        ParentIdNames.Add(team.Id, team.Name);
+        ParentSource.Add(team.Id, team.Name);
     }
 
     private void LoadTeams()
     {
         Entities = new List<IEntityViewModel<ITeam>>();
-        ParentIdNames = new Dictionary<uint?, string>();
+        ParentSource = new Dictionary<uint?, string>();
 
         var teamsList = GetTeams();
 
