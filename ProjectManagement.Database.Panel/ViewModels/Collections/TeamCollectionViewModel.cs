@@ -9,7 +9,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
-public class TeamCollectionViewModel : IChildEntityCollectionViewModel<ITeam>
+public class TeamCollectionViewModel : IEntityCollectionViewModel<ITeam>
 {
     private DatabaseContext _context;
     private List<Team> _teams;

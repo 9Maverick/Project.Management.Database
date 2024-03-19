@@ -38,7 +38,7 @@ public class TeamPageViewModel : ITeamPageViewModel
     public List<User> UsersSource { get; set; }
 
 
-    public IChildEntityCollectionViewModel<ITeam> ChildrenCollection { get => _childrenCollection; }
+    public IEntityCollectionViewModel<ITeam> ChildrenCollection { get => _childrenCollection; }
     public IEntityCollectionViewModel<IUser> UserCollection { get => _userCollection; }
 
     public bool IsLoaded { get; set; } = false;
