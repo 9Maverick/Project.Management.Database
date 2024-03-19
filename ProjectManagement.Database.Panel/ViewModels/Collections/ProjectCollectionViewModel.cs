@@ -19,8 +19,6 @@ public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
     public List<IEntityViewModel<IProject>> Entities { get; set; }
     public IProject EntityToAdd { get; set; }
 
-    public Dictionary<uint?, string> ParentIdNames => throw new NotImplementedException();
-
     public ProjectCollectionViewModel(DatabaseContext context)
     {
         _context = context;

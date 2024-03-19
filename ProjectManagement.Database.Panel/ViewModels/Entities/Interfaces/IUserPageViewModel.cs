@@ -9,5 +9,5 @@ public interface IUserPageViewModel : IEntityPageViewModel<IUser>
     public List<Team> Teams { get; set; }
     public List<Team> TeamsSource { get; set; }
 
-    public IEntityCollectionViewModel<ITeam> TeamCollection { get; }
+    public IChildEntityCollectionViewModel<ITeam> TeamCollection { get; }
 }

@@ -7,7 +7,16 @@ public interface IEntityCollectionViewModel<T>
 {
     public CollectionSettingsModel<T> Settings { get; set; }
     public List<IEntityViewModel<T>> Entities { get; }
-    public Dictionary<uint?, string> ParentIdNames { get; }
     public T EntityToAdd { get; set; }
+    public void SaveEntity();
+}
+
+public interface IChildEntityCollectionViewModel<T>
+{
+    public CollectionSettingsModel<T> Settings { get; set; }
+
+    public List<IEntityViewModel<T>> Entities { get; }
+    public Dictionary<uint?, string> ParentIdNames { get; }
+    public T EntityToAdd { get; }
     public void SaveEntity();
 }

@@ -18,8 +18,6 @@ public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
     public List<IEntityViewModel<IUser>> Entities { get; set; }
     public IUser EntityToAdd { get; set; }
 
-    public Dictionary<uint?, string> ParentIdNames => throw new NotImplementedException();
-
     public UserCollectionViewModel(DatabaseContext context)
     {
         _context = context;
