@@ -25,6 +25,7 @@ public class TeamPageViewModel : ITeamPageViewModel
         {
             _id = value;
             LoadTeam();
+            SetCollectionsSettings();
         }
     }
     public ITeam Entity { get; set; }
@@ -129,10 +130,7 @@ public class TeamPageViewModel : ITeamPageViewModel
 
         var childrenCollectionSettings = new CollectionSettingsModel<ITeam>()
         {
-            DefaultValue = new TeamModel()
-            {
-                ParentId = Id
-            }
+            IsImmutable = true,
         };
         _childrenCollectionViewModel.Settings = childrenCollectionSettings;
     }
