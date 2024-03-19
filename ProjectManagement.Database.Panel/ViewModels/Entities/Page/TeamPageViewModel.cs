@@ -11,8 +11,8 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
 public class TeamPageViewModel : ITeamPageViewModel
 {
-    private UserCollectionViewModel _userCollectionViewModel;
-    private TeamCollectionViewModel _childrenCollectionViewModel;
+    private UserCollectionViewModel _userCollection;
+    private TeamCollectionViewModel _childrenCollection;
     private DatabaseContext _context;
     private Team _team;
 
@@ -37,8 +37,8 @@ public class TeamPageViewModel : ITeamPageViewModel
     public List<User> UsersSource { get; set; }
 
 
-    public IChildEntityCollectionViewModel<ITeam> ChildrenCollection { get => _childrenCollectionViewModel; }
-    public IEntityCollectionViewModel<IUser> UserCollection { get => _userCollectionViewModel; }
+    public IChildEntityCollectionViewModel<ITeam> ChildrenCollection { get => _childrenCollection; }
+    public IEntityCollectionViewModel<IUser> UserCollection { get => _userCollection; }
 
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
@@ -46,8 +46,8 @@ public class TeamPageViewModel : ITeamPageViewModel
     public TeamPageViewModel(DatabaseContext context)
     {
         _context = context;
-        _userCollectionViewModel = new UserCollectionViewModel(context);
-        _childrenCollectionViewModel = new TeamCollectionViewModel(context);
+        _userCollection = new UserCollectionViewModel(context);
+        _childrenCollection = new TeamCollectionViewModel(context);
     }
 
     #region Controls
@@ -109,8 +109,8 @@ public class TeamPageViewModel : ITeamPageViewModel
         Users = _team.Users?.ToList();
         Children = _team.Children?.ToList();
 
-        _userCollectionViewModel.SetUsers(Users);
-        _childrenCollectionViewModel.SetTeams(Children);
+        _userCollection.SetUsers(Users);
+        _childrenCollection.SetTeams(Children);
     }
 
     private void SetModel()
@@ -126,13 +126,13 @@ public class TeamPageViewModel : ITeamPageViewModel
         {
             IsImmutable = true,
         };
-        _userCollectionViewModel.Settings = userCollectionSettings;
+        _userCollection.Settings = userCollectionSettings;
 
         var childrenCollectionSettings = new CollectionSettingsModel<ITeam>()
         {
             IsImmutable = true,
         };
-        _childrenCollectionViewModel.Settings = childrenCollectionSettings;
+        _childrenCollection.Settings = childrenCollectionSettings;
     }
 
     private void LoadSources()
