@@ -1,7 +1,7 @@
 ﻿@page "/projects/{id:int}"
 @attribute [StreamRendering]
 
-@inject IEntityPageViewModel<IProject> viewModel
+@inject IProjectPageViewModel viewModel
 
 @code
 {
@@ -41,6 +41,16 @@ else
         <p>
             <button @onclick="viewModel.Edit">Edit</button>
         </p>
+
+        @if (viewModel.TicketCollection.Entities.Count > 0)
+        {
+            <h3>Child tickets</h3>
+            <TicketCollection viewModel="viewModel.TicketCollection" />
+        }
+        else
+        {
+            <p>There are no tickets in this project</p>
+        }
     }
     else
     {
