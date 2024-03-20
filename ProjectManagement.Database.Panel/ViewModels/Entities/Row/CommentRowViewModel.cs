@@ -5,7 +5,7 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
-public class CommentRowViewModel : INestedEntityViewModel<IComment, ITicket>
+public class CommentRowViewModel : IOwnedEntityViewModel<IComment>
 {
 
     private DatabaseContext _context;
@@ -23,8 +23,6 @@ public class CommentRowViewModel : INestedEntityViewModel<IComment, ITicket>
 
     public IComment? Parent => throw new NotImplementedException();
 
-    public ITicket Master { get; private set; }
-
     public IUser Owner { get; private set; }
 
     public CommentRowViewModel(Comment team, DatabaseContext context)
@@ -35,7 +33,6 @@ public class CommentRowViewModel : INestedEntityViewModel<IComment, ITicket>
         Id = _team.Id;
 
         LoadOwner();
-        LoadMaster();
     }
     private void LoadOwner()
     {
@@ -44,15 +41,6 @@ public class CommentRowViewModel : INestedEntityViewModel<IComment, ITicket>
 
         Owner = _context.Users
             .Where(user => user.Id == ownerId)
-            .FirstOrDefault();
-    }
-    private void LoadMaster()
-    {
-        var masterId = Entity.TicketId;
-        if (masterId == null || masterId == 0) return;
-
-        Master = _context.Tickets
-            .Where(project => project.Id == masterId)
             .FirstOrDefault();
     }
 }
