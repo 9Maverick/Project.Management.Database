@@ -1,0 +1,243 @@
+﻿@page "/tickets/{id:int}"
+@attribute [StreamRendering]
+
+@inject ITicketPageViewModel viewModel
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        viewModel.Id = (uint)Id;
+        return base.OnInitializedAsync();
+    }
+}
+
+<PageTitle>Ticket</PageTitle>
+
+@if(!viewModel.IsLoaded)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+
+    <h2>
+        @viewModel.Entity.Type
+        @viewModel.Entity.Number
+        @viewModel.Entity.Title
+    </h2>
+
+    @if (!viewModel.IsEditing)
+    {
+        <p>
+            Status:
+            @viewModel.Entity.Status
+        </p>
+        <p>
+            Story points:
+            @viewModel.Entity.StoryPoints
+        </p>
+        <p>
+            Priority:
+            @viewModel.Entity.Priority
+        </p>
+        <p>
+            Project:
+            @viewModel.Master.Name
+        </p>
+        <p>
+            Parent:
+            @if(viewModel.Parent == null)
+            {
+                <span>Empty</span>
+            }
+            else
+            {
+                <span>
+                    @viewModel.Parent?.Type
+                </span>
+                <span>
+                    @viewModel.Parent?.Number 
+                </span>
+                <span>
+                    @viewModel.Parent?.Title
+                </span>
+            }
+
+        </p>
+        <p>
+            Created by:
+            @viewModel.Owner.Name
+        </p>
+        <p>
+            Assigned to:
+            @if (viewModel.Assignee == null)
+            {
+                <span>Empty</span>
+            }
+            else
+            {
+                @viewModel.Assignee?.Name
+            }
+        </p>
+        <p>
+            Description:
+            <br />
+            @viewModel.Entity.Description
+        </p>
+        <p>
+            Created at:
+            @viewModel.Entity.CreatedAt
+        </p>
+        <p>
+            <button @onclick="viewModel.Edit">Edit</button>
+        </p>
+        <br />
+
+        @if (viewModel.LinkedToCollection.Entities.Count > 0)
+        {
+            <h3>Linked to tickets</h3>
+            <TicketCollection viewModel="viewModel.LinkedToCollection" />
+        }
+
+        @if (viewModel.LinkedFromCollection.Entities.Count > 0)
+        {
+            <h3>Linked in tickets</h3>
+            <TicketCollection viewModel="viewModel.LinkedFromCollection" />
+        }
+
+        @if (viewModel.ChildrenCollection.Entities.Count > 0)
+        {
+            <h3>Child tickets</h3>
+            <TicketCollection viewModel="viewModel.ChildrenCollection" />
+        }
+        else
+        {
+            <p>There are no children for this ticket</p>
+        }
+
+        @if (viewModel.TrackingUserCollection.Entities.Count > 0)
+        {
+            <h3>Tracked by</h3>
+            <UserCollection viewModel="viewModel.TrackingUserCollection" />
+        }
+        else
+        {
+            <p>This ticket is not tracked by anyone</p>
+        }
+    }
+    else
+    {
+        <p>
+            Type:
+            <SfDropDownList TValue="TicketType" TItem="string"
+                            DataSource="Enum.GetNames(typeof(TicketType))"
+                            @bind-Value="viewModel.Entity.Type" />
+        </p>
+        <p>
+            Title:
+            <input @bind="viewModel.Entity.Title" class="form-control" placeholder="Title" />
+        </p>
+        <p>
+            Status:
+            <SfDropDownList TValue="Status" TItem="string"
+                            DataSource="Enum.GetNames(typeof(Status))"
+                            @bind-Value="viewModel.Entity.Status"/>
+        </p>
+        <p>
+            Story points:
+            <input @bind="viewModel.Entity.StoryPoints" class="form-control" placeholder="Story points" />
+        </p>
+        <p>
+            Priority:
+            <SfDropDownList TValue="Priority" TItem="string"
+                            DataSource="Enum.GetNames(typeof(Priority))"
+                            @bind-Value="viewModel.Entity.Priority" />
+        </p>
+        <p>
+            Project:
+            @viewModel.Master.Name
+        </p>              
+        <p>
+            Parent:
+            <SfDropDownList TItem="KeyValuePair<uint?, string>" TValue="uint?"
+                            DataSource="viewModel.ParentSource"
+                            @bind-Value="viewModel.Entity.ParentId"
+                            Placeholder="Select Parent">
+
+                <DropDownListFieldSettings Text="Value" Value="Key">
+                </DropDownListFieldSettings>
+
+
+            </SfDropDownList>
+
+        </p>
+        <p>
+            Created by:
+            @viewModel.Owner.Name
+        </p>
+        <p>
+            AssignedTo:
+            <SfDropDownList TItem="User" TValue="uint?"
+                            DataSource="viewModel.UsersSource"
+                            @bind-Value="viewModel.Entity.AssigneeId"
+                            Placeholder="Select Assignee">
+
+                <DropDownListFieldSettings Text="Name" Value="Id">
+                </DropDownListFieldSettings>
+
+
+            </SfDropDownList>
+
+        </p>
+        <p>
+            Description:
+            <input @bind="viewModel.Entity.Description" class="form-control" placeholder="Descriprion" />
+        </p>
+        <p>
+            Created at:
+            @viewModel.Entity.CreatedAt
+        </p>
+
+        <p>
+            Linked to tickets:
+            <SfMultiSelect TValue="List<Ticket>" TItem="Ticket"
+                            DataSource="viewModel.TicketsSource"
+                            @bind-Value="viewModel.LinkedTo"
+                            Placeholder="Linked to">
+
+                <MultiSelectFieldSettings Text="Number">
+                </MultiSelectFieldSettings>
+
+
+            </SfMultiSelect>
+        </p>
+
+        <p>
+            Tracked by:
+            <SfMultiSelect TValue="List<User>" TItem="User"
+                           DataSource="viewModel.UsersSource"
+                           @bind-Value="viewModel.TrackingUsers"
+                           Placeholder="Tracked by">
+
+                <MultiSelectFieldSettings Text="Name">
+                </MultiSelectFieldSettings>
+
+
+            </SfMultiSelect>
+
+        </p>
+        <p>
+            <button @onclick="viewModel.Save">Save</button>
+            <button @onclick="viewModel.Cancel">Cancel</button>
+        </p>
+    }
+    <br />
+    <p>
+        <button @onclick="viewModel.Delete">Delete ticket</button>
+    </p>
+}
