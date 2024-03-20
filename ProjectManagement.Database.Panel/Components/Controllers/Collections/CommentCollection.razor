@@ -1,0 +1,45 @@
+﻿@code {
+    [Parameter, EditorRequired]
+    public IOwnedEntityCollectionViewModel<IComment> viewModel { get; set; } = null!;
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Author</th>
+            <th>Created at</th>
+            <th>Text</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!viewModel.Settings.IsImmutable)
+        {
+            <tr>
+                <td>
+                    <SfDropDownList TItem="KeyValuePair<uint, string>" TValue="uint"
+                                    DataSource="viewModel.OwnerSource"
+                                    @bind-Value="viewModel.EntityToAdd.UserId"
+                                    Placeholder="Select Author">
+
+                        <DropDownListFieldSettings Text="Value" Value="Key">
+                        </DropDownListFieldSettings>
+
+
+                    </SfDropDownList>
+                </td>
+                <td></td>
+                <td>
+                    <input @bind="viewModel.EntityToAdd.Text" class="form-control" placeholder="Text" />
+                </td>
+                <td>
+                    <button @onclick="viewModel.SaveEntity">Add</button>
+                </td>
+            </tr>
+        }
+        @foreach (var comment in viewModel.Entities)
+        {
+            <CommentRow viewModel="comment" />
+        }
+    </tbody>
+</table>

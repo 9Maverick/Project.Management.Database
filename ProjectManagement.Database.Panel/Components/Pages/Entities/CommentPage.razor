@@ -1,0 +1,56 @@
+﻿@page "/comments/{id:int}"
+@attribute [StreamRendering]
+
+@inject IOwnedEntityPageViewModel<IComment> viewModel
+
+@code
+{
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        viewModel.Id = (uint)Id;
+        return base.OnInitializedAsync();
+    }
+}
+
+<PageTitle>Comment</PageTitle>
+
+@if(!viewModel.IsLoaded)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p>
+        @viewModel.Owner.Name
+    </p>
+
+    <p>
+        @viewModel.Entity.CreatedAt
+    </p>
+
+    @if (!viewModel.IsEditing)
+    {
+        <p>
+            @viewModel.Entity.Text
+        </p>
+
+        <p>
+            <button @onclick="viewModel.Edit">Edit</button>
+            <button @onclick="viewModel.Delete">Delete</button>
+        </p>
+    }
+    else
+    {
+        <p>
+            <input @bind="viewModel.Entity.Text" class="form-control" placeholder="Text" />
+        </p>
+
+        <p>
+            <button @onclick="viewModel.Save">Save</button>
+            <button @onclick="viewModel.Cancel">Cancel</button>
+        </p>
+    }
+}

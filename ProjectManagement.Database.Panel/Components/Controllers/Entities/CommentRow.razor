@@ -1,40 +1,24 @@
 ﻿@code {
     [Parameter, EditorRequired]
-    public IOwnedEntityPageViewModel<IComment> viewModel { get; set; } = null!;
+    public IOwnedEntityViewModel<IComment> viewModel { get; set; } = null!;
 }
 
-@if(viewModel.IsLoaded)
-{
-    <tr>
-        <td>
-            @viewModel.Owner.Name
-        </td>
+<tr>
+    <td>
+        @viewModel.Owner.Name
+    </td>
 
-        <td>
-             @viewModel.Entity.CreatedAt
-        </td>
+    <td>
+        @viewModel.Entity.CreatedAt
+    </td>
 
-        @if(!viewModel.IsEditing)
-        {
-            <td>
-                @viewModel.Entity.Text
-            </td>
+    <td>
+        @viewModel.Entity.Text
+    </td>
 
-            <td>
-                <button @onclick="viewModel.Edit">Edit</button>
-                <button @onclick="viewModel.Delete">Delete</button>
-            </td>
-        }
-        else
-        {
-            <td>
-                <input @bind="viewModel.Entity.Text" class="form-control" placeholder="Text" />
-            </td>
-
-            <td>
-                <button @onclick="viewModel.Save">Save</button>
-                <button @onclick="viewModel.Cancel">Cancel</button>
-            </td>
-        }
-    </tr>  
-}
+    <td>
+        <NavLink href=@($"comments/{viewModel.Id}")>
+            <button>Open</button>
+        </NavLink>
+    </td>
+</tr>  
