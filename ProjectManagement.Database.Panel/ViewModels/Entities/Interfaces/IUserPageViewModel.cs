@@ -10,4 +10,7 @@ public interface IUserPageViewModel : IEntityPageViewModel<IUser>
     public List<Team> TeamsSource { get; set; }
 
     public IEntityCollectionViewModel<ITeam> TeamCollection { get; }
+    INestedEntityCollectionViewModel<ITicket, IProject> CreatedTicketCollection { get; }
+    INestedEntityCollectionViewModel<ITicket, IProject> AssignedTicketCollection { get; }
+    INestedEntityCollectionViewModel<ITicket, IProject> TrackingTicketCollection { get; }
 }

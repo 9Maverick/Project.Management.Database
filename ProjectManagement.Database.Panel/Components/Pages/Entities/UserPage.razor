@@ -48,6 +48,36 @@ else
         {
             <p>This user is not a member of any team</p>
         }
+
+        @if (viewModel.CreatedTicketCollection.Entities.Count > 0)
+        {
+            <h3>Created tickets</h3>
+            <TicketCollection viewModel="viewModel.CreatedTicketCollection" />
+        }
+        else
+        {
+            <p>There are no tickets created by this user</p>
+        }
+
+        @if (viewModel.AssignedTicketCollection.Entities.Count > 0)
+        {
+            <h3>Assigned tickets</h3>
+            <TicketCollection viewModel="viewModel.AssignedTicketCollection" />
+        }
+        else
+        {
+            <p>There are no tickets assigned to this user</p>
+        }
+
+        @if (viewModel.TrackingTicketCollection.Entities.Count > 0)
+        {
+            <h3>Tracking tickets</h3>
+            <TicketCollection viewModel="viewModel.TrackingTicketCollection" />
+        }
+        else
+        {
+            <p>There are no tickets tracked by this user</p>
+        }
     }
     else
     {

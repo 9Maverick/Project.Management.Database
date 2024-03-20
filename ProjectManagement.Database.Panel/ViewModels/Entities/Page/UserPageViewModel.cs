@@ -13,6 +13,9 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 public class UserPageViewModel : IUserPageViewModel
 {
     private TeamCollectionViewModel _teamCollection;
+    private TicketCollectionViewModel _createdTicketCollection;
+    private TicketCollectionViewModel _assignedTicketCollection;
+    private TicketCollectionViewModel _trackingTicketCollection;
 
     private DatabaseContext _context;
     private User _user;
@@ -41,10 +44,20 @@ public class UserPageViewModel : IUserPageViewModel
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
 
+    public INestedEntityCollectionViewModel<ITicket, IProject> CreatedTicketCollection => _createdTicketCollection;
+
+    public INestedEntityCollectionViewModel<ITicket, IProject> AssignedTicketCollection => _assignedTicketCollection;
+
+    public INestedEntityCollectionViewModel<ITicket, IProject> TrackingTicketCollection => _trackingTicketCollection;
+
     public UserPageViewModel(DatabaseContext context)
     {
         _context = context;
         _teamCollection = new TeamCollectionViewModel(_context);
+
+        _createdTicketCollection = new TicketCollectionViewModel(_context);
+        _assignedTicketCollection = new TicketCollectionViewModel(_context);
+        _trackingTicketCollection = new TicketCollectionViewModel(_context);
     }
 
     #region Controls
@@ -87,6 +100,9 @@ public class UserPageViewModel : IUserPageViewModel
 
         var user = _context.Users
             .Include(user => user.Teams)
+            .Include(user => user.CreatedTasks)
+            .Include(user => user.AssignedTasks)
+            .Include(user => user.TrackingTasks)
             .Where(user => user.Id == Id)
             .FirstOrDefault();
 
@@ -106,7 +122,15 @@ public class UserPageViewModel : IUserPageViewModel
 
         Teams = _user.Teams?.ToList();
 
+        var createdTickets = _user.CreatedTasks?.ToList();
+        var assignedTickets = _user.AssignedTasks?.ToList();
+        var trackingTickets = _user?.TrackingTasks?.ToList();
+
         _teamCollection.SetTeams(Teams);
+
+        _createdTicketCollection.SetTickets(createdTickets);
+        _assignedTicketCollection.SetTickets(assignedTickets);
+        _trackingTicketCollection.SetTickets(trackingTickets);
     }
 
     private void SetModel()
@@ -127,5 +151,13 @@ public class UserPageViewModel : IUserPageViewModel
             IsImmutable = true,
         };
         _teamCollection.Settings = teamCollectionSettings;
+
+        var ticketCollectionSettings = new CollectionSettingsModel<ITicket>()
+        {
+            IsImmutable = true,
+        };
+        _createdTicketCollection.Settings = ticketCollectionSettings;
+        _assignedTicketCollection.Settings = ticketCollectionSettings;
+        _trackingTicketCollection.Settings = ticketCollectionSettings;
     }
 }
