@@ -24,9 +24,10 @@ public class CommentRowViewModel : IOwnedEntityViewModel<IComment>
 
     public IUser Owner { get; private set; }
 
-    public CommentRowViewModel(Comment comment)
+    public CommentRowViewModel(Comment comment, DatabaseContext context)
     {
         _comment = comment;
+        _context = context;
 
         Id = _comment.Id;
 

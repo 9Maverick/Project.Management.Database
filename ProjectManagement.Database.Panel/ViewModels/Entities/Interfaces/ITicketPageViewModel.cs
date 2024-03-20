@@ -13,8 +13,8 @@ public interface ITicketPageViewModel : INestedEntityPageViewModel<ITicket, IPro
     public List<Ticket> TicketsSource { get; }
 
     public IEntityCollectionViewModel<IUser> TrackingUserCollection { get; }
-    public INestedEntityCollectionViewModel<IComment, ITicket> CommentsCollection { get; }
     public INestedEntityCollectionViewModel<ITicket, IProject> ChildrenCollection { get; }
     public INestedEntityCollectionViewModel<ITicket, IProject> LinkedToCollection { get; }
     public INestedEntityCollectionViewModel<ITicket, IProject> LinkedFromCollection { get; }
+    public IOwnedEntityCollectionViewModel<IComment> CommentCollection { get; }
 }

@@ -16,6 +16,8 @@ public class TicketPageViewModel : ITicketPageViewModel
     private TicketCollectionViewModel _childrenCollection;
     private TicketCollectionViewModel _linkedToCollection;
     private TicketCollectionViewModel _linkedFromCollection;
+    private CommentCollectionViewModel _commentCollection;
+
     private DatabaseContext _context;
     private Ticket _ticket;
 
@@ -45,7 +47,7 @@ public class TicketPageViewModel : ITicketPageViewModel
     public INestedEntityCollectionViewModel<ITicket, IProject> LinkedToCollection { get => _linkedToCollection; }
 
     public INestedEntityCollectionViewModel<ITicket, IProject> LinkedFromCollection { get => _linkedFromCollection; }
-    public INestedEntityCollectionViewModel<IComment, ITicket> CommentsCollection => throw new NotImplementedException();
+    public IOwnedEntityCollectionViewModel<IComment> CommentCollection { get => _commentCollection; }
 
     public bool IsLoaded { get; set; } = false;
     public bool IsEditing { get; set; } = false;
@@ -61,6 +63,7 @@ public class TicketPageViewModel : ITicketPageViewModel
     public Dictionary<uint, string> OwnerSource { get; private set; }
     public IUser? Assignee { get; private set; }
 
+
     public TicketPageViewModel(DatabaseContext context)
     {
         _context = context;
@@ -69,6 +72,7 @@ public class TicketPageViewModel : ITicketPageViewModel
         _childrenCollection = new TicketCollectionViewModel(context);
         _linkedToCollection = new TicketCollectionViewModel(context);
         _linkedFromCollection = new TicketCollectionViewModel(context);
+        _commentCollection = new CommentCollectionViewModel(context);
     }
 
     #region Controls
@@ -114,6 +118,7 @@ public class TicketPageViewModel : ITicketPageViewModel
             .Include(ticket => ticket.LinkedFrom)
             .Include(ticket => ticket.LinkedTo)
             .Include(ticket => ticket.Children)
+            .Include(ticket => ticket.Comments)
             .Where(ticket => ticket.Id == Id)
             .FirstOrDefault();
 
@@ -148,11 +153,15 @@ public class TicketPageViewModel : ITicketPageViewModel
         LinkedTo = _ticket.LinkedTo?.ToList();
         var linkedFromTickets = _ticket.LinkedFrom?.ToList();
 
+        var comments = _ticket.Comments?.ToList();
+
         _trackingUserCollection.SetUsers(TrackingUsers);
         _childrenCollection.SetTickets(children);
 
         _linkedToCollection.SetTickets(LinkedTo);
         _linkedFromCollection.SetTickets(linkedFromTickets);
+
+        _commentCollection.SetComments(comments);
     }
 
     private void SetModel()
@@ -182,6 +191,15 @@ public class TicketPageViewModel : ITicketPageViewModel
         };
         _linkedToCollection.Settings = ticketsCollectionSettings;
         _linkedFromCollection.Settings = ticketsCollectionSettings;
+
+        var commentsCollectionSettings = new CollectionSettingsModel<IComment>()
+        {
+            DefaultValue = new Comment()
+            {
+                TicketId = _ticket.Id
+            }
+        };
+        _commentCollection.Settings = commentsCollectionSettings;
     }
 
     private void LoadSources()

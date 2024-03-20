@@ -13,8 +13,17 @@ public class CommentCollectionViewModel : IOwnedEntityCollectionViewModel<IComme
 {
     private DatabaseContext _context;
     private List<Comment> _comments;
+    private CollectionSettingsModel<IComment> _settings;
 
-    public CollectionSettingsModel<IComment> Settings { get; set; }
+    public CollectionSettingsModel<IComment> Settings
+    {
+        get => _settings;
+        set
+        {
+            _settings = value;
+            SetEntityToAdd();
+        }
+    }
     public List<IOwnedEntityViewModel<IComment>> Entities { get; set; }
     public Dictionary<uint?, string> ParentSource => throw new NotImplementedException();
     public IComment EntityToAdd { get; set; }
@@ -41,6 +50,8 @@ public class CommentCollectionViewModel : IOwnedEntityCollectionViewModel<IComme
 
         var comment = new Comment(EntityToAdd);
 
+        comment.CreatedAt = DateTime.Now;
+
         _context.Comments.Add(comment);
         _context.SaveChanges();
 
@@ -63,7 +74,7 @@ public class CommentCollectionViewModel : IOwnedEntityCollectionViewModel<IComme
     }
     private void AddToCollection(Comment comment)
     {
-        Entities.Add(new CommentRowViewModel(comment));
+        Entities.Add(new CommentRowViewModel(comment, _context));
     }
 
     private void LoadComments()
