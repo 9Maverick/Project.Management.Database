@@ -28,5 +28,6 @@ public static class ServicesConfiguration
 		services.AddTransient<IProjectPageViewModel, ProjectPageViewModel>();
 		services.AddTransient<ITeamPageViewModel, TeamPageViewModel>();
 		services.AddTransient<ITicketPageViewModel, TicketPageViewModel>();
+		services.AddTransient<IOwnedEntityPageViewModel<IComment>, CommentPageViewModel>();
 	}
 }
