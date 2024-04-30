@@ -4,26 +4,26 @@ using ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
-public class ProjectRowViewModel : IEntityViewModel<IProject>
+public class UserRowViewModel : IEntityViewModel<IUser>
 {
-	private Project _project;
+	private User _user;
 
 	public uint Id { get; set; }
-	public IProject Entity
+	public IUser Entity
 	{
-		get => _project;
+		get => _user;
 		set
 		{
 			return;
 		}
 	}
 
-	public IProject? Parent => throw new NotImplementedException();
+	public IUser? Parent => throw new NotImplementedException();
 
-	public ProjectRowViewModel(Project project)
+	public UserRowViewModel(User user)
 	{
-		_project = project;
+		_user = user;
 
-		Id = _project.Id;
+		Id = _user.Id;
 	}
 }
