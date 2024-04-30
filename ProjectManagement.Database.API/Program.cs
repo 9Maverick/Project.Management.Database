@@ -4,7 +4,7 @@ using ProjectManagement.Database.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsDevelopment())
+if(builder.Environment.IsDevelopment())
 {
 	builder.Configuration
 		.AddUserSecrets<Program>();
@@ -26,7 +26,7 @@ builder.Services.AddAutoMapper(typeof(AutoMappingProfiles).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if(app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI();

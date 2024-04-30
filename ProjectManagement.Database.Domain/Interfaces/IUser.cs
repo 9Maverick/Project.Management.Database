@@ -2,5 +2,5 @@
 
 public interface IUser
 {
-    public string Name { get; set; }
+	public string Name { get; set; }
 }

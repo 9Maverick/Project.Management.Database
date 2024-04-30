@@ -12,7 +12,7 @@ public class TeamsConfiguration : IEntityTypeConfiguration<Team>
 
 		entity.Property(e => e.Name)
 			.IsRequired();
-				
+
 		entity.HasOne(e => e.Parent)
 			.WithMany(e => e.Children)
 			.HasForeignKey(e => e.ParentId)

@@ -2,6 +2,6 @@
 
 public class CollectionSettingsModel<T>
 {
-    public T? DefaultValue { get; set; }
-    public bool IsImmutable { get; set; } = false;
+	public T? DefaultValue { get; set; }
+	public bool IsImmutable { get; set; } = false;
 }

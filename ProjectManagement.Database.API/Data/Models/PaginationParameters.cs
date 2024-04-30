@@ -2,12 +2,12 @@
 
 public class PaginationParameters
 {
-    /// <summary>
-    /// Index of first item to take
-    /// </summary>
-    public uint Offset { get; set; } = 0;
-    /// <summary>
-    /// Number of items to take
-    /// </summary>
-    public uint Limit { get; set; } = int.MaxValue;
+	/// <summary>
+	/// Index of first item to take
+	/// </summary>
+	public uint Offset { get; set; } = 0;
+	/// <summary>
+	/// Number of items to take
+	/// </summary>
+	public uint Limit { get; set; } = int.MaxValue;
 }

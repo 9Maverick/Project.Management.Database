@@ -8,107 +8,110 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Page;
 
 public class CommentPageViewModel : IOwnedEntityPageViewModel<IComment>
 {
-    private DatabaseContext _context;
-    private Comment _comment;
+	private DatabaseContext _context;
+	private Comment _comment;
 
-    public uint Id { get; set; }
-    public IComment Entity
-    {
-        get => _comment;
-        set
-        {
-            return;
-        }
-    }
+	public uint Id { get; set; }
+	public IComment Entity
+	{
+		get => _comment;
+		set
+		{
+			return;
+		}
+	}
 
-    public IComment? Parent => throw new NotImplementedException();
+	public IComment? Parent => throw new NotImplementedException();
 
-    public IUser Owner { get; private set; }
+	public IUser Owner { get; private set; }
 
-    public Dictionary<uint, string> OwnerSource { get; private set; }
+	public Dictionary<uint, string> OwnerSource { get; private set; }
 
-    public bool IsLoaded { get; set; }
-    public bool IsEditing { get; set; }
+	public bool IsLoaded { get; set; }
+	public bool IsEditing { get; set; }
 
-    public CommentPageViewModel(DatabaseContext context)
-    {
-        _context = context;
+	public CommentPageViewModel(DatabaseContext context)
+	{
+		_context = context;
 
-        Id = _comment.Id;
+		Id = _comment.Id;
 
-        LoadOwner();
-    }
+		LoadOwner();
+	}
 
-    #region Controls
+	#region Controls
 
-    public void Cancel()
-    {
-        Entity = _comment;
-        IsEditing = false;
-    }
+	public void Cancel()
+	{
+		Entity = _comment;
+		IsEditing = false;
+	}
 
-    public void Delete()
-    {
-        _context.Comments.Remove(_comment);
-        _context.SaveChanges();
+	public void Delete()
+	{
+		_context.Comments.Remove(_comment);
+		_context.SaveChanges();
 
-        IsLoaded = false;
-    }
+		IsLoaded = false;
+	}
 
-    public void Edit()
-    {
-        Entity = new CommentModel(_comment);
-        IsEditing = true;
-    }
+	public void Edit()
+	{
+		Entity = new CommentModel(_comment);
+		IsEditing = true;
+	}
 
-    public void Save()
-    {
-        _comment.SetComment(Entity);
-        _context.SaveChanges();
+	public void Save()
+	{
+		_comment.SetComment(Entity);
+		_context.SaveChanges();
 
-        IsEditing = false;
+		IsEditing = false;
 
-        LoadComment();
-    }
+		LoadComment();
+	}
 
-    #endregion
+	#endregion
 
-    private void LoadComment()
-    {
-        if (Id == 0) return;
+	private void LoadComment()
+	{
+		if(Id == 0)
+			return;
 
-        var comment = _context.Comments.Find(Id);
+		var comment = _context.Comments.Find(Id);
 
-        if (comment == null) return;
+		if(comment == null)
+			return;
 
-        _comment = comment;
-        Entity = _comment;
+		_comment = comment;
+		Entity = _comment;
 
-        LoadOwner();
-        LoadOwnerVariants();
+		LoadOwner();
+		LoadOwnerVariants();
 
-        IsLoaded = true;
-    }
+		IsLoaded = true;
+	}
 
-    private void LoadOwner()
-    {
-        var ownerId = Entity.UserId;
-        if (ownerId == null || ownerId == 0) return;
+	private void LoadOwner()
+	{
+		var ownerId = Entity.UserId;
+		if(ownerId == null || ownerId == 0)
+			return;
 
-        Owner = _context.Users
-            .Where(user => user.Id == ownerId)
-            .FirstOrDefault();
-    }
-    private void LoadOwnerVariants()
-    {
-        OwnerSource = new Dictionary<uint, string>();
+		Owner = _context.Users
+			.Where(user => user.Id == ownerId)
+			.FirstOrDefault();
+	}
+	private void LoadOwnerVariants()
+	{
+		OwnerSource = new Dictionary<uint, string>();
 
-        var userList = _context.Users
-            .ToList();
+		var userList = _context.Users
+			.ToList();
 
-        foreach (var user in userList)
-        {
-            OwnerSource.Add(user.Id, user.Name);
-        }
-    }
+		foreach(var user in userList)
+		{
+			OwnerSource.Add(user.Id, user.Name);
+		}
+	}
 }

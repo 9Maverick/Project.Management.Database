@@ -44,7 +44,7 @@ public class UsersController : ControllerBase
 	{
 		var user = await _context.Users.FindAsync(id);
 
-		if (user == null)
+		if(user == null)
 		{
 			return NotFound();
 		}
@@ -56,11 +56,11 @@ public class UsersController : ControllerBase
 	[HttpPut("{id}")]
 	public async Task<IActionResult> PutUser(UserDTO userDTO)
 	{
-		if (!IsDTOValid(userDTO))
+		if(!IsDTOValid(userDTO))
 		{
 			return BadRequest();
 		}
-		if (!UserExists(userDTO.Id))
+		if(!UserExists(userDTO.Id))
 		{
 			return NotFound();
 		}
@@ -77,7 +77,7 @@ public class UsersController : ControllerBase
 	[HttpPost]
 	public async Task<ActionResult<User>> PostUser(UserDTO userDTO)
 	{
-		if (!IsDTOValid(userDTO))
+		if(!IsDTOValid(userDTO))
 		{
 			return BadRequest();
 		}
@@ -96,7 +96,7 @@ public class UsersController : ControllerBase
 	public async Task<IActionResult> DeleteUser(uint id)
 	{
 		var user = await _context.Users.FindAsync(id);
-		if (user == null)
+		if(user == null)
 		{
 			return NotFound();
 		}
@@ -109,16 +109,19 @@ public class UsersController : ControllerBase
 
 	private bool UserExists(uint id)
 	{
-		if (id == 0) return false;
+		if(id == 0)
+			return false;
 
 		return _context.Users.Any(e => e.Id == id);
 	}
 
 	private bool IsDTOValid(UserDTO userInDTO)
 	{
-		if (userInDTO == null) return false;
+		if(userInDTO == null)
+			return false;
 
-		if (string.IsNullOrWhiteSpace(userInDTO.Name)) return false;
+		if(string.IsNullOrWhiteSpace(userInDTO.Name))
+			return false;
 
 		return true;
 	}

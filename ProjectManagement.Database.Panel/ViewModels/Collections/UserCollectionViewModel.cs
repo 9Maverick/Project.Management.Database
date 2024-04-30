@@ -11,80 +11,82 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
 public class UserCollectionViewModel : IEntityCollectionViewModel<IUser>
 {
-    private DatabaseContext _context;
-    private List<User> _users;
+	private DatabaseContext _context;
+	private List<User> _users;
 
-    public CollectionSettingsModel<IUser> Settings { get; set; }
-    public List<IEntityViewModel<IUser>> Entities { get; set; }
-    public IUser EntityToAdd { get; set; }
+	public CollectionSettingsModel<IUser> Settings { get; set; }
+	public List<IEntityViewModel<IUser>> Entities { get; set; }
+	public IUser EntityToAdd { get; set; }
 
-    public Dictionary<uint?, string> ParentSource => throw new NotImplementedException();
+	public Dictionary<uint?, string> ParentSource => throw new NotImplementedException();
 
-    public UserCollectionViewModel(DatabaseContext context)
-    {
-        _context = context;
+	public UserCollectionViewModel(DatabaseContext context)
+	{
+		_context = context;
 
-        Settings = new CollectionSettingsModel<IUser>();
+		Settings = new CollectionSettingsModel<IUser>();
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadUsers();
-    }
+		LoadUsers();
+	}
 
-    public void SaveEntity()
-    {
-        if (!IsUserValid(EntityToAdd)) return;
+	public void SaveEntity()
+	{
+		if(!IsUserValid(EntityToAdd))
+			return;
 
-        var user = new User(EntityToAdd);
+		var user = new User(EntityToAdd);
 
-        _context.Users.Add(user);
-        _context.SaveChanges();
+		_context.Users.Add(user);
+		_context.SaveChanges();
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadUsers();
-    }
+		LoadUsers();
+	}
 
-    public void SetUsers(List<User> users)
-    {
-        _users = users ?? new List<User>();
-        LoadUsers();
-    }
+	public void SetUsers(List<User> users)
+	{
+		_users = users ?? new List<User>();
+		LoadUsers();
+	}
 
-    private List<User> GetUsers()
-    {
-        return _users ?? _context.Users.ToList();
-    }
+	private List<User> GetUsers()
+	{
+		return _users ?? _context.Users.ToList();
+	}
 
-    private void LoadUsers()
-    {
-        Entities = new List<IEntityViewModel<IUser>>();
+	private void LoadUsers()
+	{
+		Entities = new List<IEntityViewModel<IUser>>();
 
-        var usersList = GetUsers();
+		var usersList = GetUsers();
 
-        foreach (var project in usersList)
-        {
-            Entities.Add(new UserRowViewModel(project));
-        }
-    }
+		foreach(var project in usersList)
+		{
+			Entities.Add(new UserRowViewModel(project));
+		}
+	}
 
-    private void SetEntityToAdd()
-    {
+	private void SetEntityToAdd()
+	{
 
-        EntityToAdd = new UserModel();
+		EntityToAdd = new UserModel();
 
-        if (Settings.DefaultValue == null) return;
+		if(Settings.DefaultValue == null)
+			return;
 
-        var defaultValue = Settings.DefaultValue;
+		var defaultValue = Settings.DefaultValue;
 
-        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
-        {
-            EntityToAdd.Name = defaultValue.Name;
-        }
-    }
+		if(!string.IsNullOrWhiteSpace(defaultValue.Name))
+		{
+			EntityToAdd.Name = defaultValue.Name;
+		}
+	}
 
-    private bool IsUserValid(IUser user)
-    {
-        return !string.IsNullOrWhiteSpace(user.Name);
-    }
+	private bool IsUserValid(IUser user)
+	{
+		return !string.IsNullOrWhiteSpace(user.Name);
+	}
 }

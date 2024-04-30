@@ -11,88 +11,89 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
 public class ProjectCollectionViewModel : IEntityCollectionViewModel<IProject>
 {
-    private DatabaseContext _context;
-    private List<Project> _projects;
+	private DatabaseContext _context;
+	private List<Project> _projects;
 
-    public CollectionSettingsModel<IProject> Settings { get; set; }
+	public CollectionSettingsModel<IProject> Settings { get; set; }
 
-    public List<IEntityViewModel<IProject>> Entities { get; set; }
-    public IProject EntityToAdd { get; set; }
+	public List<IEntityViewModel<IProject>> Entities { get; set; }
+	public IProject EntityToAdd { get; set; }
 
-    public Dictionary<uint?, string> ParentSource => throw new NotImplementedException();
+	public Dictionary<uint?, string> ParentSource => throw new NotImplementedException();
 
-    public ProjectCollectionViewModel(DatabaseContext context)
-    {
-        _context = context;
+	public ProjectCollectionViewModel(DatabaseContext context)
+	{
+		_context = context;
 
-        Settings = new CollectionSettingsModel<IProject>();
+		Settings = new CollectionSettingsModel<IProject>();
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadProjects();
-    }
+		LoadProjects();
+	}
 
-    public void SaveEntity()
-    {
-        if (!IsProjectValid(EntityToAdd))
-            return;
+	public void SaveEntity()
+	{
+		if(!IsProjectValid(EntityToAdd))
+			return;
 
-        var project = new Project(EntityToAdd);
+		var project = new Project(EntityToAdd);
 
-        _context.Projects.Add(project);
-        _context.SaveChanges();
+		_context.Projects.Add(project);
+		_context.SaveChanges();
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadProjects();
-    }
+		LoadProjects();
+	}
 
-    public void SetProjects(List<Project> projects)
-    {
-        _projects = projects;
-        LoadProjects();
-    }
+	public void SetProjects(List<Project> projects)
+	{
+		_projects = projects;
+		LoadProjects();
+	}
 
-    private List<Project> GetProjects()
-    {
-        return _projects ?? _context.Projects.ToList();
-    }
+	private List<Project> GetProjects()
+	{
+		return _projects ?? _context.Projects.ToList();
+	}
 
-    private void LoadProjects()
-    {
-        Entities = new List<IEntityViewModel<IProject>>();
+	private void LoadProjects()
+	{
+		Entities = new List<IEntityViewModel<IProject>>();
 
-        var projectsList = GetProjects();
+		var projectsList = GetProjects();
 
-        foreach (var project in projectsList)
-        {
-            Entities.Add(new ProjectRowViewModel(project));
-        }
-    }
+		foreach(var project in projectsList)
+		{
+			Entities.Add(new ProjectRowViewModel(project));
+		}
+	}
 
-    private void SetEntityToAdd()
-    {
+	private void SetEntityToAdd()
+	{
 
-        EntityToAdd = new ProjectModel();
+		EntityToAdd = new ProjectModel();
 
-        if (Settings.DefaultValue == null) return;
+		if(Settings.DefaultValue == null)
+			return;
 
-        var defaultValue = Settings.DefaultValue;
+		var defaultValue = Settings.DefaultValue;
 
-        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
-        {
-            EntityToAdd.Name = defaultValue.Name;
-        }
+		if(!string.IsNullOrWhiteSpace(defaultValue.Name))
+		{
+			EntityToAdd.Name = defaultValue.Name;
+		}
 
-        if (!string.IsNullOrWhiteSpace(defaultValue.Abbreviation))
-        {
-            EntityToAdd.Abbreviation = defaultValue.Abbreviation;
-        }
-    }
+		if(!string.IsNullOrWhiteSpace(defaultValue.Abbreviation))
+		{
+			EntityToAdd.Abbreviation = defaultValue.Abbreviation;
+		}
+	}
 
-    private bool IsProjectValid(IProject project)
-    {
-        return !string.IsNullOrWhiteSpace(project.Name)
-            && !string.IsNullOrWhiteSpace(project.Abbreviation);
-    }
+	private bool IsProjectValid(IProject project)
+	{
+		return !string.IsNullOrWhiteSpace(project.Name)
+			&& !string.IsNullOrWhiteSpace(project.Abbreviation);
+	}
 }

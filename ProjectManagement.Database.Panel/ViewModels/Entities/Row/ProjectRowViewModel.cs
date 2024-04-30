@@ -6,24 +6,24 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 public class UserRowViewModel : IEntityViewModel<IUser>
 {
-    private User _user;
+	private User _user;
 
-    public uint Id { get; set; }
-    public IUser Entity
-    {
-        get => _user;
-        set
-        {
-            return;
-        }
-    }
+	public uint Id { get; set; }
+	public IUser Entity
+	{
+		get => _user;
+		set
+		{
+			return;
+		}
+	}
 
-    public IUser? Parent => throw new NotImplementedException();
+	public IUser? Parent => throw new NotImplementedException();
 
-    public UserRowViewModel(User user)
-    {
-        _user = user;
+	public UserRowViewModel(User user)
+	{
+		_user = user;
 
-        Id = _user.Id;
-    }
+		Id = _user.Id;
+	}
 }

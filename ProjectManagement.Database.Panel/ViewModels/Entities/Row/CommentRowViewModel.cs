@@ -7,40 +7,41 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 public class CommentRowViewModel : IOwnedEntityViewModel<IComment>
 {
-    private DatabaseContext _context;
-    private Comment _comment;
+	private DatabaseContext _context;
+	private Comment _comment;
 
-    public uint Id { get; set; }
-    public IComment Entity
-    {
-        get => _comment;
-        set
-        {
-            return;
-        }
-    }
+	public uint Id { get; set; }
+	public IComment Entity
+	{
+		get => _comment;
+		set
+		{
+			return;
+		}
+	}
 
-    public IComment? Parent => throw new NotImplementedException();
+	public IComment? Parent => throw new NotImplementedException();
 
-    public IUser Owner { get; private set; }
+	public IUser Owner { get; private set; }
 
-    public CommentRowViewModel(Comment comment, DatabaseContext context)
-    {
-        _comment = comment;
-        _context = context;
+	public CommentRowViewModel(Comment comment, DatabaseContext context)
+	{
+		_comment = comment;
+		_context = context;
 
-        Id = _comment.Id;
+		Id = _comment.Id;
 
-        LoadOwner();
-    }
+		LoadOwner();
+	}
 
-    private void LoadOwner()
-    {
-        var ownerId = Entity.UserId;
-        if (ownerId == null || ownerId == 0) return;
+	private void LoadOwner()
+	{
+		var ownerId = Entity.UserId;
+		if(ownerId == null || ownerId == 0)
+			return;
 
-        Owner = _context.Users
-            .Where(user => user.Id == ownerId)
-            .FirstOrDefault();
-    }
+		Owner = _context.Users
+			.Where(user => user.Id == ownerId)
+			.FirstOrDefault();
+	}
 }

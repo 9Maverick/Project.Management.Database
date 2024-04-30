@@ -6,15 +6,15 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Interfaces;
 
 public interface ITicketPageViewModel : INestedEntityPageViewModel<ITicket, IProject>, IChildEntityPageViewModel<ITicket>
 {
-    public IUser? Assignee { get; }
-    public List<User> TrackingUsers { get; set; }
-    public List<User> UsersSource { get; }
-    public List<Ticket> LinkedTo { get; set; }
-    public List<Ticket> TicketsSource { get; }
+	public IUser? Assignee { get; }
+	public List<User> TrackingUsers { get; set; }
+	public List<User> UsersSource { get; }
+	public List<Ticket> LinkedTo { get; set; }
+	public List<Ticket> TicketsSource { get; }
 
-    public IEntityCollectionViewModel<IUser> TrackingUserCollection { get; }
-    public INestedEntityCollectionViewModel<ITicket, IProject> ChildrenCollection { get; }
-    public INestedEntityCollectionViewModel<ITicket, IProject> LinkedToCollection { get; }
-    public INestedEntityCollectionViewModel<ITicket, IProject> LinkedFromCollection { get; }
-    public IOwnedEntityCollectionViewModel<IComment> CommentCollection { get; }
+	public IEntityCollectionViewModel<IUser> TrackingUserCollection { get; }
+	public INestedEntityCollectionViewModel<ITicket, IProject> ChildrenCollection { get; }
+	public INestedEntityCollectionViewModel<ITicket, IProject> LinkedToCollection { get; }
+	public INestedEntityCollectionViewModel<ITicket, IProject> LinkedFromCollection { get; }
+	public IOwnedEntityCollectionViewModel<IComment> CommentCollection { get; }
 }

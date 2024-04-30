@@ -11,93 +11,94 @@ namespace ProjectManagement.Database.Panel.ViewModels.Collections;
 
 public class TeamCollectionViewModel : IEntityCollectionViewModel<ITeam>
 {
-    private DatabaseContext _context;
-    private List<Team> _teams;
+	private DatabaseContext _context;
+	private List<Team> _teams;
 
-    public CollectionSettingsModel<ITeam> Settings { get; set; }
-    public List<IEntityViewModel<ITeam>> Entities { get; set; }
-    public Dictionary<uint?, string> ParentSource { get; set; }
-    public ITeam EntityToAdd { get; set; }
+	public CollectionSettingsModel<ITeam> Settings { get; set; }
+	public List<IEntityViewModel<ITeam>> Entities { get; set; }
+	public Dictionary<uint?, string> ParentSource { get; set; }
+	public ITeam EntityToAdd { get; set; }
 
-    public TeamCollectionViewModel(DatabaseContext context)
-    {
-        _context = context;
+	public TeamCollectionViewModel(DatabaseContext context)
+	{
+		_context = context;
 
-        Settings = new CollectionSettingsModel<ITeam>();
+		Settings = new CollectionSettingsModel<ITeam>();
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadTeams();
-    }
+		LoadTeams();
+	}
 
-    public void SaveEntity()
-    {
-        if (!IsTeamValid(EntityToAdd))
-            return;
+	public void SaveEntity()
+	{
+		if(!IsTeamValid(EntityToAdd))
+			return;
 
-        var team = new Team(EntityToAdd);
+		var team = new Team(EntityToAdd);
 
-        _context.Teams.Add(team);
-        _context.SaveChanges();
+		_context.Teams.Add(team);
+		_context.SaveChanges();
 
-        AddToCollection(team);
+		AddToCollection(team);
 
-        SetEntityToAdd();
+		SetEntityToAdd();
 
-        LoadTeams();
-    }
+		LoadTeams();
+	}
 
-    public void SetTeams(List<Team> teams)
-    {
-        _teams = teams ?? new List<Team>();
-        LoadTeams();
-    }
+	public void SetTeams(List<Team> teams)
+	{
+		_teams = teams ?? new List<Team>();
+		LoadTeams();
+	}
 
-    private List<Team> GetTeams()
-    {
-        return _teams ?? _context.Teams.ToList();
-    }
-    private void AddToCollection(Team team)
-    {
-        Entities.Add(new TeamRowViewModel(team, _context));
+	private List<Team> GetTeams()
+	{
+		return _teams ?? _context.Teams.ToList();
+	}
+	private void AddToCollection(Team team)
+	{
+		Entities.Add(new TeamRowViewModel(team, _context));
 
-        ParentSource.Add(team.Id, team.Name);
-    }
+		ParentSource.Add(team.Id, team.Name);
+	}
 
-    private void LoadTeams()
-    {
-        Entities = new List<IEntityViewModel<ITeam>>();
-        ParentSource = new Dictionary<uint?, string>();
+	private void LoadTeams()
+	{
+		Entities = new List<IEntityViewModel<ITeam>>();
+		ParentSource = new Dictionary<uint?, string>();
 
-        var teamsList = GetTeams();
+		var teamsList = GetTeams();
 
-        foreach (var team in teamsList)
-        {
-            AddToCollection(team);
-        }
-    }
+		foreach(var team in teamsList)
+		{
+			AddToCollection(team);
+		}
+	}
 
-    private void SetEntityToAdd()
-    {
+	private void SetEntityToAdd()
+	{
 
-        EntityToAdd = new TeamModel();
+		EntityToAdd = new TeamModel();
 
-        if (Settings.DefaultValue == null) return;
+		if(Settings.DefaultValue == null)
+			return;
 
-        var defaultValue = Settings.DefaultValue;
+		var defaultValue = Settings.DefaultValue;
 
-        if (!string.IsNullOrWhiteSpace(defaultValue.Name))
-        {
-            EntityToAdd.Name = defaultValue.Name;
-        }
-        if (defaultValue.ParentId != null && defaultValue.ParentId > 0)
-        {
-            EntityToAdd.ParentId = defaultValue.ParentId;
-        }
-    }
+		if(!string.IsNullOrWhiteSpace(defaultValue.Name))
+		{
+			EntityToAdd.Name = defaultValue.Name;
+		}
+		if(defaultValue.ParentId != null && defaultValue.ParentId > 0)
+		{
+			EntityToAdd.ParentId = defaultValue.ParentId;
+		}
+	}
 
-    private bool IsTeamValid(ITeam team)
-    {
-        return !string.IsNullOrWhiteSpace(team.Name);
-    }
+	private bool IsTeamValid(ITeam team)
+	{
+		return !string.IsNullOrWhiteSpace(team.Name);
+	}
 }

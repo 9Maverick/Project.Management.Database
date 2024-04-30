@@ -13,7 +13,7 @@ public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContex
 	{
 		Environment.SetEnvironmentVariable(AdminConnectionString, "Data Source = (localdb)\\MSSQLLocalDB;Initial Catalog=ProjectManagement;Integrated Security=true;Trusted_Connection=True");
 		var connectionString = Environment.GetEnvironmentVariable(AdminConnectionString);
-		if (string.IsNullOrEmpty(connectionString))
+		if(string.IsNullOrEmpty(connectionString))
 		{
 			throw new ApplicationException(
 				$"Error, absent {AdminConnectionString}");

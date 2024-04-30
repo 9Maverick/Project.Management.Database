@@ -47,7 +47,7 @@ public class CommentsController : ControllerBase
 	{
 		var comment = await _context.Comments.FindAsync(id);
 
-		if (comment == null)
+		if(comment == null)
 		{
 			return NotFound();
 		}
@@ -59,11 +59,11 @@ public class CommentsController : ControllerBase
 	[HttpPut("{id}")]
 	public async Task<IActionResult> PutComment(CommentDTO commentDTO)
 	{
-		if (!IsDTOValid(commentDTO))
+		if(!IsDTOValid(commentDTO))
 		{
 			return BadRequest();
 		}
-		if (!CommentExists(commentDTO.Id))
+		if(!CommentExists(commentDTO.Id))
 		{
 			return NotFound();
 		}
@@ -80,7 +80,7 @@ public class CommentsController : ControllerBase
 	[HttpPost]
 	public async Task<ActionResult<Comment>> PostComment(CommentDTO commentDTO)
 	{
-		if (!IsDTOValid(commentDTO))
+		if(!IsDTOValid(commentDTO))
 		{
 			return BadRequest();
 		}
@@ -99,7 +99,7 @@ public class CommentsController : ControllerBase
 	public async Task<IActionResult> DeleteComment(uint id)
 	{
 		var comment = await _context.Comments.FindAsync(id);
-		if (comment == null)
+		if(comment == null)
 		{
 			return NotFound();
 		}
@@ -112,20 +112,25 @@ public class CommentsController : ControllerBase
 
 	private bool CommentExists(uint id)
 	{
-		if (id == 0) return false;
+		if(id == 0)
+			return false;
 
 		return _context.Comments.Any(e => e.Id == id);
 	}
 
 	private bool IsDTOValid(CommentDTO commentDTO)
 	{
-		if (commentDTO == null) return false;
+		if(commentDTO == null)
+			return false;
 
-		if (commentDTO.UserId == 0) return false;
+		if(commentDTO.UserId == 0)
+			return false;
 
-		if (commentDTO.TicketId == 0) return false;
+		if(commentDTO.TicketId == 0)
+			return false;
 
-		if (string.IsNullOrWhiteSpace(commentDTO.Text)) return false;
+		if(string.IsNullOrWhiteSpace(commentDTO.Text))
+			return false;
 
 		return true;
 	}

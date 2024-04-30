@@ -45,7 +45,7 @@ public class TeamsController : ControllerBase
 	{
 		var team = await _context.Teams.FindAsync(id);
 
-		if (team == null)
+		if(team == null)
 		{
 			return NotFound();
 		}
@@ -57,11 +57,11 @@ public class TeamsController : ControllerBase
 	[HttpPut("{id}")]
 	public async Task<IActionResult> PutTeam(TeamDTO teamDTO)
 	{
-		if (!IsDTOValid(teamDTO))
+		if(!IsDTOValid(teamDTO))
 		{
 			BadRequest();
 		}
-		if (!TeamExists(teamDTO.Id))
+		if(!TeamExists(teamDTO.Id))
 		{
 			return NotFound();
 		}
@@ -78,7 +78,7 @@ public class TeamsController : ControllerBase
 	[HttpPost]
 	public async Task<ActionResult<Team>> PostTeam(TeamDTO teamDTO)
 	{
-		if (!IsDTOValid(teamDTO))
+		if(!IsDTOValid(teamDTO))
 		{
 			BadRequest();
 		}
@@ -97,7 +97,7 @@ public class TeamsController : ControllerBase
 	public async Task<IActionResult> DeleteTeam(uint id)
 	{
 		var team = await _context.Teams.FindAsync(id);
-		if (team == null)
+		if(team == null)
 		{
 			return NotFound();
 		}
@@ -110,16 +110,19 @@ public class TeamsController : ControllerBase
 
 	private bool TeamExists(uint id)
 	{
-		if (id == 0) return false;
+		if(id == 0)
+			return false;
 
 		return _context.Teams.Any(e => e.Id == id);
 	}
 
 	private bool IsDTOValid(TeamDTO teamDTO)
 	{
-		if (teamDTO == null) return false;
+		if(teamDTO == null)
+			return false;
 
-		if (string.IsNullOrWhiteSpace(teamDTO.Name)) return false;
+		if(string.IsNullOrWhiteSpace(teamDTO.Name))
+			return false;
 
 		return true;
 	}

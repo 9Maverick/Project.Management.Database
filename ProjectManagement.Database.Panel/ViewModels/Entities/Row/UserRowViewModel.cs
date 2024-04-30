@@ -6,24 +6,24 @@ namespace ProjectManagement.Database.Panel.ViewModels.Entities.Row;
 
 public class ProjectRowViewModel : IEntityViewModel<IProject>
 {
-    private Project _project;
+	private Project _project;
 
-    public uint Id { get; set; }
-    public IProject Entity
-    {
-        get => _project;
-        set
-        {
-            return;
-        }
-    }
+	public uint Id { get; set; }
+	public IProject Entity
+	{
+		get => _project;
+		set
+		{
+			return;
+		}
+	}
 
-    public IProject? Parent => throw new NotImplementedException();
+	public IProject? Parent => throw new NotImplementedException();
 
-    public ProjectRowViewModel(Project project)
-    {
-        _project = project;
+	public ProjectRowViewModel(Project project)
+	{
+		_project = project;
 
-        Id = _project.Id;
-    }
+		Id = _project.Id;
+	}
 }
