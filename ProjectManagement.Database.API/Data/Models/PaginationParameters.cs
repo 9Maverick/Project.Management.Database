@@ -1,4 +1,4 @@
-﻿namespace Atoms.Discoveries.Database.API.Data.Models;
+﻿namespace ProjectManagement.Database.API.Data.Models;
 
 public class PaginationParameters
 {
