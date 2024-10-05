@@ -10,6 +10,10 @@
     <PackageReference Include="Microsoft.IdentityModel.Logging" Version="8.1.0" />
     <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="27.1.51" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="27.1.51" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
